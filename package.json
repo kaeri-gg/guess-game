@@ -6,13 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "css": "npx tailwindcss -i ./styles/main.css -o ./styles/style.css --watch"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
+    "sass-embedded": "^1.77.8",
     "tailwindcss": "^3.4.10",
     "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "postcss-cli": "^11.0.0"
   }
 }

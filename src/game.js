@@ -1,27 +1,28 @@
-import { Generator } from "./generator";
+import { Generator } from './generator';
+// import '../styles/game.scss';
 
 export class Game {
-    constructor(min = 0, max = 100) {
-        this.MIN = min;
-        this.MAX = max;
+  constructor(min = 0, max = 100) {
+    this.MIN = min;
+    this.MAX = max;
 
-        this.generator = new Generator();
-        this.reset();
-    }
+    this.generator = new Generator();
+    this.reset();
+  }
 
-    isEqualTo(value) {
-        return value === this.numberToGuess;
-    }
+  isEqualTo(value) {
+    return value === this.numberToGuess;
+  }
 
-    isGreaterThan(value) {
-        return this.numberToGuess > value;
-    }
+  isGreaterThan(value) {
+    return this.numberToGuess > value;
+  }
 
-    isLessThan(value) {
-        return this.numberToGuess < value;
-    }
+  isLessThan(value) {
+    return this.numberToGuess < value;
+  }
 
-    reset() {
-        this.numberToGuess = this.generator.generateNumber(this.MIN, this.MAX);
-    }
+  reset() {
+    this.numberToGuess = this.generator.generateNumber(this.MIN, this.MAX);
+  }
 }
