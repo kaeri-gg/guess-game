@@ -2,17 +2,70 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link href="/style.css" rel="stylesheet" /> -->
     <link href="./styles/main.scss" rel="stylesheet" />
-    <title>Guessing Game</title>
+    <title>Guess Game</title>
   </head>
 
-  <body>
+  <body class="bg-default-gray100">
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
-    <button class="bg-red-600 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">...</button>
+    <div class="main-container-center">
+      <img src="/guess-game-logo.svg" class="max-h-64" />
+      <form class="container-center">
+        <div class="justify-center self-center">
+          <p class="text-description">
+            🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
+            would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
+          </p>
+        </div>
+        <div class="">
+          <input
+            type="text"
+            class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
+            placeholder="Your name..."
+          />
+        </div>
+        <div class="">
+          <div class="flex flex-row items-center justify-center space-x-2">
+            <label class="radio-label">
+              <input type="radio" name="option" value="3" class="peer hidden" />
+              <div
+                class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 px-4 py-3 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+              >
+                Easy
+              </div>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="option" value="3" class="peer hidden" />
+              <div
+                class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 px-4 py-3 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+              >
+                Normal
+              </div>
+            </label>
+
+            <label class="radio-label">
+              <input type="radio" name="option" value="3" class="peer hidden" />
+              <div
+                class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 px-4 py-3 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+              >
+                Hard
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="">
+          <button
+            class="bg-default-orange h-16 w-80 rounded-full px-4 py-2 font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+          >
+            START
+          </button>
+        </div>
+
+        <div class=""></div>
+      </form>
+    </div>
   </body>
 </html>
