@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -9,96 +8,184 @@
     <script type="module" src="/src/js/main.js"></script>
 
     <title>Guess Game</title>
-</head>
+  </head>
 
-<body class="bg-default-gray100">
+  <body class="bg-default-gray100">
     <div id="app"></div>
-    <div class="flex h-screen flex-col items-center space-y-4">
-        <!-------------------- main --------------------->
-        <div class="flex h-screen flex-col items-center justify-center space-y-4">
-            <img src="/guess-game-logo.svg" class="max-h-64" />
-            <form class="flex w-1/2 flex-col items-center justify-center space-y-6">
-                <!-----------game mechanics ---------->
-                <div class="justify-center self-center">
-                    <p class="text-center">
-                        🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
-                    </p>
+    <div class="flex h-screen flex-col items-center">
+      <!-------------------- welcome page --------------------->
+      <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
+        <img src="/guess-game-logo.svg" class="max-h-64" />
+        <div class="flex w-1/2 flex-col items-center justify-center space-y-6">
+          <!-----------game mechanics ---------->
+          <div class="justify-center self-center pb-20">
+            <p class="text-center">
+              🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
+              would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
+            </p>
+          </div>
+
+          <!-----------name input ---------->
+          <div class="hidden">
+            <input
+              type="text"
+              class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
+              placeholder="Your name..."
+            />
+          </div>
+
+          <div class="flex flex-row items-center justify-center space-x-2">
+            <!-----------mode: easy ---------->
+            <div class="flex flex-col items-center justify-center space-y-3">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Haerin</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 4s</p>
                 </div>
+              </div>
 
-                <!-----------name input ---------->
-                <div class="">
-                    <input type="text" class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md" placeholder="Your name..."
-                    />
+              <label class="radio-label">
+                <input type="radio" id="modeEasy" name="option" value="1" class="peer hidden" />
+                <div
+                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                >
+                  Easy
                 </div>
+              </label>
+            </div>
 
-                <div class="flex flex-row items-center justify-center space-x-2">
-                    <!-----------mode: easy ---------->
-                    <div class="flex flex-col items-center justify-center space-y-3">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Haerin</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 4s</p>
-                            </div>
-                        </div>
-
-                        <div class="radio-label">
-                            <input type="radio" name="option" value="1" class="peer hidden" />
-                            <div class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white">
-                                Easy
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-----------mode: normal ---------->
-                    <div class="flex flex-col items-center justify-center space-y-3">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Kaeri</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 6s</p>
-                            </div>
-                        </div>
-
-                        <div class="radio-label">
-                            <input type="radio" name="option" value="2" class="peer hidden" />
-                            <div class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white">
-                                Normal
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-----------mode: hard ---------->
-                    <div class="flex flex-col items-center justify-center space-y-3">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Harry</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 7s</p>
-                            </div>
-                        </div>
-
-                        <div class="radio-label">
-                            <input type="radio" name="option" value="3" class="peer hidden" />
-                            <div class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white">
-                                Hard
-                            </div>
-                        </div>
-                    </div>
+            <!-----------mode: normal ---------->
+            <div class="flex flex-col items-center justify-center space-y-3">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Kaeri</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 6s</p>
                 </div>
-                <div>
-                    <button class="h-16 w-80 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
-              <a href="/start-game.html">START</a>
+              </div>
+
+              <label class="radio-label">
+                <input type="radio" id="modeNormal" name="option" value="2" class="peer hidden" />
+                <div
+                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                >
+                  Normal
+                </div>
+              </label>
+            </div>
+
+            <!-----------mode: hard ---------->
+            <div class="flex flex-col items-center justify-center space-y-3">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Harry</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 7s</p>
+                </div>
+              </div>
+
+              <label class="radio-label">
+                <input type="radio" id="modeHard" name="option" value="3" class="peer hidden" />
+                <div
+                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                >
+                  Hard
+                </div>
+              </label>
+            </div>
+          </div>
+          <div>
+            <button
+              id="gameStart"
+              class="h-16 w-80 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+            >
+              START
             </button>
-                </div>
-            </form>
+          </div>
         </div>
+      </div>
 
-        <!-------------------- footer --------------------->
-        <div class="h-12">
-            <p>Footer details here.</p>
+      <!-------------------- countdown --------------------->
+      <div id="countdownMainDiv" class="hidden h-screen w-full flex-col items-center justify-center">
+        <p id="counter" class="font-display text-[15rem] font-bold text-default-orange">3</p>
+      </div>
+
+      <!-------------------- game starts page --------------------->
+      <div id="startGameMainDiv" class="hidden h-screen w-full flex-col justify-between">
+        <!-------------------- details --------------------->
+
+        <div class="flex flex-row items-center justify-between p-8">
+          <div class="flex flex-row bg-default-gray200 px-5 py-1">
+            <span class="p-2">Mode: </span>
+            <span id="modeText" class="p-2 font-bold">Normal (1-100) </span>
+          </div>
+          <div id="timerDiv" class="flex flex-row bg-default-orange px-5 py-1 text-white">
+            <span class="p-2">Time Remaining: </span>
+            <span id="timer" class="p-2 font-bold">20s</span>
+          </div>
         </div>
+        <!-------------------- main --------------------->
+        <div class="flex flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <p>Player:</p>
+            <p id="playerName" class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
+          </div>
+          <div class="flex flex-col items-center p-7">
+            <input
+              id="playerInput"
+              type="number"
+              maxlength="4"
+              class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none"
+              placeholder="00"
+            />
+            <div class="flex flex-row space-x-1 p-3">
+              <div class="h-6 w-6">
+                <i id="hintIcon" class="fas fa-arrow-up text-green-500"></i>
+              </div>
+              <span>your number is </span>
+              <span id="hintText" class="font-display font-bold">higher!</span>
+            </div>
+          </div>
+          <!-------------------- submit button --------------------->
+          <div id="playerSubmitDiv" class="w-100 hidden flex-row">
+            <button
+              id="playerSubmit"
+              class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+            >
+              <a href="#">SUBMIT</a>
+            </button>
+          </div>
+
+          <!-------------------- new and start again button --------------------->
+          <div id="startNewDiv" class="w-100 flex flex-row space-x-4">
+            <button
+              id="startNew"
+              class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+            >
+              <a href="#">NEW</a>
+            </button>
+            <button
+              id="reset"
+              class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+            >
+              <a href="#">START AGAIN</a>
+            </button>
+          </div>
+
+          <!-------------------- best score --------------------->
+          <div class="flex w-full flex-col items-end p-8">
+            <p class="font-display">Best:</p>
+            <p id="bestPlayerName" class="font-bebas text-5xl text-black">Kaeri</p>
+            <p id="bestTime" class="font-bebas text-4xl text-default-orange">6.8S</p>
+          </div>
+        </div>
+      </div>
+
+      <!-------------------- footer --------------------->
+      <div class="flex h-12">
+        <p>Footer details here.</p>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
