@@ -5,7 +5,7 @@ import tailwindcss from 'tailwindcss';
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
   const getBase = () => {
-    if (env.mode === 'github') return '/game-hub';
+    if (env.mode === 'github') return '/guess-game';
 
     return './';
   };
