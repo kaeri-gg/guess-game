@@ -1,5 +1,4 @@
 import { Generator } from './generator';
-// import '../styles/game.scss';
 
 export class Game {
   constructor(min = 0, max = 100) {
