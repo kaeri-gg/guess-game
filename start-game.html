@@ -1,58 +1,84 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./styles/main.scss" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script type="module" src="/src/js/main.js"></script>
 
-    <title>Guess Game</title>
-</head>
+    <title>Start</title>
+  </head>
 
-<body class="bg-default-gray100">
+  <body class="bg-default-gray100">
     <div class="flex h-screen flex-col justify-between">
-        <!-------------------- details --------------------->
+      <!-------------------- details --------------------->
 
-        <div class="flex flex-row items-center justify-between p-8">
-            <div class="flex flex-row bg-default-gray200 px-5 py-1">
-                <span class="p-2">Mode: </span>
-                <span class="p-2 font-bold">Normal (1-100) </span>
-            </div>
-            <div class="flex flex-row bg-default-orange px-5 py-1 text-white">
-                <span class="p-2">Time Remaining: </span>
-                <span class="p-2 font-bold">20s</span>
-            </div>
+      <div class="flex flex-row items-center justify-between p-8">
+        <div class="flex flex-row bg-default-gray200 px-5 py-1">
+          <span class="p-2">Mode: </span>
+          <span id="modeText" class="p-2 font-bold">Normal (1-100) </span>
         </div>
-        <!-------------------- main --------------------->
-        <div class="flex h-9 flex-col items-center justify-center">
-            <div class="flex flex-col items-center">
-                <p>Player:</p>
-                <p class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
+        <div id="timerDiv" class="flex flex-row bg-default-orange px-5 py-1 text-white">
+          <span class="p-2">Time Remaining: </span>
+          <span id="timer" class="p-2 font-bold">20s</span>
+        </div>
+      </div>
+      <!-------------------- main --------------------->
+      <div class="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center">
+          <p>Player:</p>
+          <p id="playerName" class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
+        </div>
+        <div class="flex flex-col items-center p-7">
+          <input
+            id="playerInput"
+            type="number"
+            maxlength="4"
+            class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none"
+            placeholder="00"
+          />
+          <div class="flex flex-row space-x-1 p-3">
+            <div class="h-6 w-6">
+              <i id="hintIcon" class="fas fa-arrow-up text-green-500"></i>
             </div>
-            <div class="flex flex-col items-center p-7">
-                <input type="number" maxlength="4" class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none" placeholder="00" />
-                <div class="flex flex-row space-x-1 p-3">
-                    <div class="h-6 w-6">
-                        <i class="fas fa-arrow-up text-green-500"></i>
-                    </div>
-                    <span>your number is </span>
-                    <span class="font-display font-bold">higher!</span>
-                </div>
-            </div>
-            <div>
-                <button class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+            <span>your number is </span>
+            <span id="hintText" class="font-display font-bold">higher!</span>
+          </div>
+        </div>
+        <!-------------------- submit button --------------------->
+        <div id="playerSubmitDiv" class="w-100 hidden flex-row">
+          <button
+            id="playerSubmit"
+            class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+          >
             <a href="#">SUBMIT</a>
           </button>
-            </div>
         </div>
 
-        <!-------------------- footer --------------------->
-        <div class="flex h-12 flex-col items-center">
-            <p>Footer details here.</p>
+        <!-------------------- new and start again button --------------------->
+        <div id="startNewDiv" class="w-100 flex flex-row space-x-4">
+          <button
+            id="startNew"
+            class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+          >
+            <a href="#">NEW</a>
+          </button>
+          <button
+            id="reset"
+            class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+          >
+            <a href="#">START AGAIN</a>
+          </button>
         </div>
+
+        <!-------------------- best score --------------------->
+        <div class="flex w-full flex-col items-end p-8">
+          <p class="font-display">Best:</p>
+          <p id="bestPlayerName" class="font-bebas text-5xl text-black">Kaeri</p>
+          <p id="bestTime" class="font-bebas text-4xl text-default-orange">6.8S</p>
+        </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
