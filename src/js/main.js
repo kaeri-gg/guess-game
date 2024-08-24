@@ -3,39 +3,109 @@ import { Game } from './game';
 import $ from 'jquery';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-try {
-  const game = new Game(0, 10);
+export class Session {
+  constructor() {
+    this.countdownDiv = $('#countdownMainDiv');
+    this.welcomeDiv = $('#welcomeMainDiv');
+    this.startGameDiv = $('#startGameMainDiv');
+    this.startButton = $('#gameStart');
+    this.counterDiv = $('#counter');
+    this.startNewDiv = $('#startNewDiv');
 
-  console.log('Is equal to: 2', game.isEqualTo(2));
-  console.log('Is greater than: 2', game.isGreaterThan(2));
-  console.log('Is less than: 2', game.isLessThan(2));
-} catch (error) {
-  console.log(error.message);
-}
+    this.playerNameInput = $('#playerNameInput');
+    this.playerNameText = $('#playerNameText');
+    this.playerInput = $('#playerInput');
+    this.playerSubmitDiv = $('#playerSubmitDiv');
+    this.playerSubmitButton = $('#playerSubmit');
+    this.modeText = $('#modeText');
+    this.hintText = $('#hintText');
+    this.hintDiv = $('#hintDiv');
+    this.youWonDiv = $('#youWonDiv');
+    this.youWonText = $('#youWonText');
 
-const startMyGame = () => {
-  console.log('game started');
-};
+    this.easyModeOption = $('#easyMode');
+    this.normalModeOption = $('#normalMode');
+    this.hardModeOption = $('#hardMode');
 
-let counter = 4;
-const timer = () => {
-  if (--counter === 0) {
-    startMyGame();
-    clearInterval(startGame);
-    return;
+    this.game = new Game();
+    this.counter = 3;
+    this.startGame = null;
+
+    this.youWonDiv.hide();
+    this.hintDiv.hide();
+
+    this.initialize();
   }
 
-  $('#counter').text(counter);
-};
+  initialize() {
+    this.startButton.click(() => {
+      // TODO : .show / .hide
+      this.welcomeDiv.addClass('hidden');
+      this.countdownDiv.removeClass('hidden').addClass('flex');
 
-const oneSecond = 1000;
-let startGame;
+      this.checkMode();
+      const delay = 1000;
+      this.startGame = setInterval(() => this.timer(), delay);
+    });
+  }
 
-$('#gameStart').click(() => {
-  $('#countdownMainDiv').removeClass('hidden');
-  $('#countdownMainDiv').addClass('flex');
+  checkMode() {
+    this.selectedMode = $('input[name="mode"]:checked').val();
+    this.game.setMode(this.selectedMode);
+    console.log('Selected mode:', this.selectedMode);
+  }
 
-  $('#welcomeMainDiv').addClass('hidden');
+  timer() {
+    if (--this.counter === 0) {
+      this.showNewSession();
+      clearInterval(this.showNewSession);
+      return;
+    }
+    this.counterDiv.text(this.counter);
+  }
 
-  startGame = setInterval(timer, oneSecond);
-});
+  // show and start new session
+  showNewSession() {
+    this.countdownDiv.removeClass('flex').addClass('hidden');
+    this.startGameDiv.removeClass('hidden').addClass('flex');
+    this.playerSubmitDiv.removeClass('hidden').addClass('flex');
+    this.startNewDiv.addClass('hidden');
+    this.start();
+  }
+
+  start() {
+    // TODO: display timer
+    // TODO: display player name
+
+    const mode = this.selectedMode;
+    const formattedMode = mode + ' [' + this.game[mode][0] + ', ' + this.game[mode][1] + ']';
+
+    this.playerNameText.text(this.playerNameInput.val());
+    this.modeText.text(formattedMode);
+
+    this.playerSubmitButton.on('click', () => {
+      this.guess();
+    });
+  }
+
+  guess() {
+    // TODO: get the player name
+    const inputValue = parseInt($('#playerInput').val());
+
+    if (this.game.isGreaterThan(inputValue) === true) {
+      this.hintDiv.show();
+      this.hintText.text('higher!');
+    } else if (this.game.isLessThan(inputValue) === true) {
+      this.hintDiv.show();
+      this.hintText.text('lower!');
+    } else {
+      this.youWonDiv.show();
+      this.hintDiv.hide();
+      this.playerSubmitDiv.hide();
+      this.startNewDiv.show();
+    }
+  }
+}
+
+// Instantiate and start the GameApp
+const gameApp = new Session();

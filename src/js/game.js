@@ -1,12 +1,35 @@
-import { Generator } from './generator';
+import { Generator, generator } from './generator';
 
 export class Game {
-  constructor(min = 0, max = 100) {
-    this.MIN = min;
-    this.MAX = max;
+  constructor() {
+    // try {
+    //   const game = new Game(0, 10);
+    //   console.log('Is equal to:', inputValue, this.game.isEqualTo(inputValue));
+    //   console.log('Is greater than:', inputValue, this.game.isGreaterThan(inputValue));
+    //   console.log('Is less than:', inputValue, this.game.isLessThan(inputValue));
+    // } catch (error) {
+    //   console.log(this.error.message);
+    // }
 
-    this.generator = new Generator();
-    this.reset();
+    this.Easy = [1, 10];
+    this.Normal = [1, 100];
+    this.Hard = [1, 1000];
+  }
+
+  setMode(mode) {
+    switch (mode) {
+      case 'Hard':
+        this.numberToGuess = generator.generateNumber(...this.Hard);
+        break;
+      case 'Normal':
+        this.numberToGuess = generator.generateNumber(...this.Normal);
+        break;
+      case 'Easy':
+        this.numberToGuess = generator.generateNumber(...this.Easy);
+        break;
+      default:
+        throw new Error(`Mode "${mode}" doesn't exists.`);
+    }
   }
 
   isEqualTo(value) {
@@ -19,9 +42,5 @@ export class Game {
 
   isLessThan(value) {
     return this.numberToGuess < value;
-  }
-
-  reset() {
-    this.numberToGuess = this.generator.generateNumber(this.MIN, this.MAX);
   }
 }
