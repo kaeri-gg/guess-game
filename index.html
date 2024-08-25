@@ -98,7 +98,8 @@
           </div>
           <div>
             <button
-              id="gameStart"
+              id="startButton"
+              style="display: none"
               class="h-16 w-80 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               START
@@ -108,12 +109,12 @@
       </div>
 
       <!-------------------- countdown --------------------->
-      <div id="countdownMainDiv" class="hidden h-screen w-full flex-col items-center justify-center">
-        <p id="counter" class="font-display text-[15rem] font-bold text-default-orange">3</p>
+      <div id="countdownMainDiv" class="flex h-screen w-full flex-col items-center justify-center">
+        <p id="counterText" class="font-display text-[15rem] font-bold text-default-orange">3</p>
       </div>
 
       <!-------------------- game starts page --------------------->
-      <div id="startGameMainDiv" class="hidden h-screen w-full flex-col justify-between">
+      <div id="startGameMainDiv" class="flex h-screen w-full flex-col justify-between">
         <!-------------------- details --------------------->
 
         <div class="flex flex-row items-center justify-between p-8">
@@ -153,28 +154,28 @@
             </div>
           </div>
           <!-------------------- submit button --------------------->
-          <div id="playerSubmitDiv" class="w-100 hidden flex-row">
+          <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
             <button
               id="playerSubmit"
               class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
-              <a href="#">SUBMIT</a>
+              SUBMIT
             </button>
           </div>
 
           <!-------------------- new and start again button --------------------->
-          <div id="startNewDiv" class="w-100 flex flex-row space-x-4">
+          <div id="newGameButtonsDiv" class="w-100 flex flex-row space-x-4">
             <button
               id="startNew"
               class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
-              <a href="#">NEW</a>
+              NEW
             </button>
             <button
               id="reset"
               class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
-              <a href="#">START AGAIN</a>
+              START AGAIN
             </button>
           </div>
 
