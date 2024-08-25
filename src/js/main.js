@@ -61,10 +61,6 @@ export class Session {
     });
   }
 
-  new() {
-    // TODO : .show / .hide
-  }
-
   checkMode() {
     this.selectedMode = $('input[name="mode"]:checked').val();
     this.game.setMode(this.selectedMode);
