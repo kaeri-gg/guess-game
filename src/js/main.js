@@ -114,7 +114,7 @@ export class Session {
     this.youWonDiv.hide();
     this.newGameButtonsDiv.hide();
     this.playerSubmitDiv.show('slow');
-    this.startButton.show();
+    this.startButton.show('slow');
   }
 
   showGameDetails() {
