@@ -12,13 +12,13 @@
 
   <body class="bg-default-gray100">
     <div id="app"></div>
-    <div class="flex h-screen flex-col items-center justify-between">
+    <div class="flex h-screen w-full flex-col items-center justify-between">
       <!-------------------- welcome page --------------------->
-      <div id="welcomeMainDiv" class="flex w-full flex-col items-center justify-center space-y-4">
-        <img src="/guess-game-logo.svg" class="max-h-64" />
-        <div class="flex w-1/2 flex-col items-center justify-center space-y-6">
+      <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
+        <img src="/guess-game-logo.svg" class="mt-5 h-40 md:h-72" />
+        <div class="flex w-full flex-col items-center justify-center space-y-6 px-7">
           <!-----------game mechanics ---------->
-          <div class="justify-center self-center pb-20">
+          <div class="justify-center self-center md:my-8 md:w-2/5 2xl:w-1/4">
             <p class="text-center">
               🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
               would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
@@ -35,9 +35,9 @@
             />
           </div>
 
-          <div class="flex flex-row items-center justify-center space-x-2">
+          <div class="flex w-full flex-row items-center justify-center space-x-2 md:w-2/4 md:pb-8 2xl:w-1/4">
             <!-----------mode: easy ---------->
-            <div class="flex flex-col items-center justify-center space-y-3">
+            <div class="flex w-full flex-col items-center justify-center">
               <div class="flex flex-col">
                 <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                 <div class="flex flex-row">
@@ -46,10 +46,10 @@
                 </div>
               </div>
 
-              <label class="radio-label">
+              <label class="radio-label w-full">
                 <input type="radio" id="easyMode" name="mode" value="Easy" class="peer hidden" />
                 <div
-                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
                 >
                   Easy
                 </div>
@@ -57,7 +57,7 @@
             </div>
 
             <!-----------mode: normal ---------->
-            <div class="flex flex-col items-center justify-center space-y-3">
+            <div class="flex w-full flex-col items-center justify-center">
               <div class="flex flex-col">
                 <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                 <div class="flex flex-row">
@@ -66,10 +66,10 @@
                 </div>
               </div>
 
-              <label class="radio-label">
+              <label class="radio-label w-full">
                 <input type="radio" id="normalMode" name="mode" value="Normal" class="peer hidden" />
                 <div
-                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
                 >
                   Normal
                 </div>
@@ -77,7 +77,7 @@
             </div>
 
             <!-----------mode: hard ---------->
-            <div class="flex flex-col items-center justify-center space-y-3">
+            <div class="flex w-full flex-col items-center justify-center">
               <div class="flex flex-col">
                 <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                 <div class="flex flex-row">
@@ -86,21 +86,21 @@
                 </div>
               </div>
 
-              <label class="radio-label">
+              <label class="radio-label w-full">
                 <input type="radio" id="hardMode" name="mode" value="Hard" class="peer hidden" />
                 <div
-                  class="flex h-14 w-32 items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
                 >
                   Hard
                 </div>
               </label>
             </div>
           </div>
-          <div>
+          <div class="w-full md:w-2/4 2xl:w-1/4">
             <button
               id="startButton"
               style="display: none"
-              class="h-16 w-80 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+              class="h-16 w-full rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               START
             </button>
@@ -189,8 +189,8 @@
       </div>
 
       <!-------------------- footer --------------------->
-      <div class="flex h-20">
-        <p>Footer details here.</p>
+      <div class="flex">
+        <span class="flex h-12 items-center">Footer details here.</span>
       </div>
     </div>
   </body>
