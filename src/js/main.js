@@ -67,10 +67,9 @@ export class Session {
 
   countDown() {
     this.counter--;
-    console.log(this.counter);
     this.counterDiv.text(this.counter);
 
-    if (this.counter <= 0) {
+    if (this.counter === 0) {
       this.showNewSession();
     }
   }
@@ -106,6 +105,7 @@ export class Session {
 
   resetFields() {
     this.counter = 3;
+    this.counterDiv.text(this.counter);
 
     this.modes.prop('checked', false); // clear the radio button
     this.playerNameInput.val(''); // clear the radio button
