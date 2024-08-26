@@ -1,6 +1,5 @@
 //import '../styles/style.css';
 import { Game } from './game';
-import $ from 'jquery';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export class Session {
@@ -8,18 +7,19 @@ export class Session {
     this.countdownMainDiv = $('#countdownMainDiv');
     this.welcomeMainDiv = $('#welcomeMainDiv');
     this.startGameMainDiv = $('#startGameMainDiv');
-    this.startButton = $('#startButton');
+    this.startBtn = $('#startBtn');
     this.counterDiv = $('#counterText');
     this.newGameButtonsDiv = $('#newGameButtonsDiv');
-    this.startNew = $('#startNew');
-    this.reset = $('#reset');
+    this.startNewBtn = $('#startNewBtn');
+    this.startAgainBtn = $('#startAgainBtn');
+    this.modeDiv = $('#modeDiv');
     this.modes = $('input[name="mode"]');
 
     this.playerNameInput = $('#playerNameInput');
     this.playerNameText = $('#playerNameText');
     this.playerInput = $('#playerInput');
     this.playerSubmitDiv = $('#playerSubmitDiv');
-    this.playerSubmitButton = $('#playerSubmit');
+    this.playerSubmitBtn = $('#playerSubmitBtn');
     this.modeText = $('#modeText');
     this.hintText = $('#hintText');
     this.hintIcon = $('#hintIcon');
@@ -39,28 +39,39 @@ export class Session {
   }
 
   subscribeEventListeners() {
-    this.startButton.on('click', () => {
+    this.startBtn.on('click', () => {
       this.selectedMode = $('input[name="mode"]:checked').val();
 
-      if (this.selectedMode) {
-        this.showCountDownPage();
-        this.checkMode(this.selectedMode);
-        this.timerId = setInterval(() => this.countDown(), 1000);
+      if (!this.playerNameInput.val()) {
+        this.playerNameInput.effect('shake');
+        return;
       }
-      return;
+      if (!this.selectedMode) {
+        this.modeDiv.effect('shake');
+        return;
+      }
+
+      this.showCountDownPage();
+      this.checkMode(this.selectedMode);
+      this.timerId = setInterval(() => this.countDown(), 1000);
     });
 
-    this.startNew.on('click', () => {
-      console.log('start new click');
+    this.playerSubmitBtn.on('click', () => {
+      this.guess();
+    });
+
+    this.startNewBtn.on('click', () => {
       this.showWelcomePage();
     });
 
-    this.reset.on('click', () => {
-      console.log('reset click');
+    this.startAgainBtn.on('click', () => {
+      // wip
+      // this.playerInput.val('');
     });
 
-    this.playerSubmitButton.on('click', () => {
-      this.guess();
+    this.playerInput.on('click', () => {
+      console.log('click');
+      this.playerInput.val('');
     });
   }
 
@@ -119,7 +130,7 @@ export class Session {
     this.youWonDiv.hide();
     this.newGameButtonsDiv.hide();
     this.playerSubmitDiv.show('slow');
-    this.startButton.show('slow');
+    this.startBtn.show('slow');
   }
 
   showGameDetails() {

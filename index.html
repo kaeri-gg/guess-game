@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="./styles/main.scss" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
     <script type="module" src="/src/js/main.js"></script>
 
     <title>Guess Game</title>
@@ -37,7 +39,10 @@
             />
           </div>
 
-          <div class="flex w-full flex-row items-center justify-center space-x-2 md:w-2/4 md:pb-8 2xl:w-1/4">
+          <div
+            id="modeDiv"
+            class="flex w-full flex-row items-center justify-center space-x-2 md:w-2/4 md:pb-8 2xl:w-1/4"
+          >
             <!-----------mode: easy ---------->
             <div class="flex w-full flex-col items-center justify-center">
               <div class="flex flex-col">
@@ -100,8 +105,7 @@
           </div>
           <div class="w-full md:w-2/4 2xl:w-1/4">
             <button
-              id="startButton"
-              style="display: none"
+              id="startBtn"
               class="h-16 w-full rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               START
@@ -120,7 +124,7 @@
       </div>
 
       <!-------------------- game starts page --------------------->
-      <div id="startGameMainDiv" style="display: none" class="flex h-screen w-full flex-col justify-between">
+      <div id="startGameMainDiv" style="display: flex" class="flex h-screen w-full flex-col justify-between">
         <!-------------------- details --------------------->
 
         <div class="flex w-full flex-row items-center justify-between p-8">
@@ -165,7 +169,7 @@
           <!-------------------- submit button --------------------->
           <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
             <button
-              id="playerSubmit"
+              id="playerSubmitBtn"
               class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               SUBMIT
@@ -173,15 +177,15 @@
           </div>
 
           <!-------------------- new and start again button --------------------->
-          <div id="newGameButtonsDiv" class="w-100 flex flex-col space-y-3 md:flex-row md:space-x-4">
+          <div id="newGameButtonsDiv" class="w-100 flex flex-col space-y-3 md:flex-row md:space-x-4 md:space-y-0">
             <button
-              id="startNew"
+              id="startNewBtn"
               class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               NEW
             </button>
             <button
-              id="reset"
+              id="startAgainBtn"
               class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
             >
               START AGAIN
