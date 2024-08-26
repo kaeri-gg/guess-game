@@ -22,6 +22,7 @@ export class Session {
     this.playerSubmitButton = $('#playerSubmit');
     this.modeText = $('#modeText');
     this.hintText = $('#hintText');
+    this.hintIcon = $('#hintIcon');
     this.hintDiv = $('#hintDiv');
     this.youWonDiv = $('#youWonDiv');
     this.youWonText = $('#youWonText');
@@ -104,11 +105,11 @@ export class Session {
   }
 
   resetFields() {
-    this.counter = 3;
+    this.counter = 1;
     this.counterDiv.text(this.counter);
 
     this.modes.prop('checked', false); // clear the radio button
-    this.playerNameInput.val(''); // clear the radio button
+    this.playerNameInput.val('Harry'); // clear the radio button
     this.playerInput.val(''); //reset player input in start game page
     this.hintDiv.hide();
     this.youWonDiv.hide();
@@ -132,11 +133,13 @@ export class Session {
 
     if (this.game.isGreaterThan(inputValue)) {
       this.hintDiv.fadeIn();
+      this.hintIcon.removeClass('fa-arrow-up text-green-500').addClass('fa-arrow-down text-red-500');
       this.hintText.text('lower!');
     }
 
     if (this.game.isLessThan(inputValue)) {
       this.hintDiv.fadeIn();
+      this.hintIcon.removeClass('fa-arrow-down text-red-500').addClass('fa-arrow-up text-green-500');
       this.hintText.text('higher!');
     }
 

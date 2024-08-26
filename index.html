@@ -30,6 +30,8 @@
             <input
               type="text"
               id="playerNameInput"
+              autocomplete="none"
+              autofocus="on"
               class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
               placeholder="Your name..."
             />
@@ -149,8 +151,8 @@
               placeholder="00"
             />
             <div id="hintDiv" class="flex flex-row space-x-1 p-3">
-              <div class="h-6 w-6">
-                <i id="hintIcon" class="fas fa-arrow-up text-green-500"></i>
+              <div class="h-6 w-5">
+                <i id="hintIcon" class="fas fa-arrow-up text-red-500"></i>
               </div>
               <span>your number is </span>
               <span id="hintText" class="font-display font-bold">higher!</span>
@@ -171,7 +173,7 @@
           </div>
 
           <!-------------------- new and start again button --------------------->
-          <div id="newGameButtonsDiv" class="w-100 flex flex-row space-x-4">
+          <div id="newGameButtonsDiv" class="w-100 flex flex-col space-y-3 md:flex-row md:space-x-4">
             <button
               id="startNew"
               class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
@@ -196,7 +198,7 @@
       </div>
 
       <!-------------------- footer --------------------->
-      <div class="flex bg-transparent">
+      <div class="flex bg-transparent" style="display: none">
         <span class="flex h-12 items-center">Footer details here.</span>
       </div>
     </div>
