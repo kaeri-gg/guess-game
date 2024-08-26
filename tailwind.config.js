@@ -23,7 +23,17 @@ export default {
       },
     },
     extend: {
-      colors: defaultTheme.colors, // Add this line to ensure default colors are imported
+      colors: defaultTheme.colors, // Ensures default colors are imported
+      keyframes: {
+        // custom animation
+        pump: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0' },
+          '80%': { transform: 'scale(1.2)', opacity: '100' },
+        },
+      },
+      animation: {
+        pump: 'pump 1s ease-in-out infinite',
+      },
     },
   },
   plugins: [],
