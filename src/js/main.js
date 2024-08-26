@@ -40,10 +40,14 @@ export class Session {
 
   subscribeEventListeners() {
     this.startButton.on('click', () => {
-      this.showCountDownPage();
+      this.selectedMode = $('input[name="mode"]:checked').val();
 
-      this.checkMode();
-      this.timerId = setInterval(() => this.countDown(), 1000);
+      if (this.selectedMode) {
+        this.showCountDownPage();
+        this.checkMode(this.selectedMode);
+        this.timerId = setInterval(() => this.countDown(), 1000);
+      }
+      return;
     });
 
     this.startNew.on('click', () => {
@@ -60,14 +64,14 @@ export class Session {
     });
   }
 
-  checkMode() {
-    this.selectedMode = $('input[name="mode"]:checked').val();
-    this.game.setMode(this.selectedMode);
-    console.log('Selected mode:', this.selectedMode);
+  checkMode(selectedMode) {
+    this.game.setMode(selectedMode);
   }
 
   countDown() {
     this.counter--;
+    this.showCountDownPage();
+
     this.counterDiv.text(this.counter);
 
     if (this.counter === 0) {
@@ -105,7 +109,7 @@ export class Session {
   }
 
   resetFields() {
-    this.counter = 1;
+    this.counter = 3;
     this.counterDiv.text(this.counter);
 
     this.modes.prop('checked', false); // clear the radio button
