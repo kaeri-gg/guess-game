@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
     <script type="module" src="/src/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 
     <title>Guess Game</title>
 </head>
@@ -131,10 +132,9 @@
                     <input id="playerInput" type="number" maxlength="4" class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none" placeholder="00" />
                     <div id="hintDiv" class="flex flex-row space-x-1 p-3">
                         <div class="h-6 w-5">
-                            <i id="hintIcon" class="fas fa-arrow-up text-red-500"></i>
+                            <i id="hintIcon" class="fas"></i>
                         </div>
-                        <span>your number is </span>
-                        <span id="hintText" class="font-display font-bold">higher!</span>
+                        <span id="hintText" class="font-display"></span>
                     </div>
 
                     <div id="youWonDiv" class="flex flex-row space-x-1 p-3">

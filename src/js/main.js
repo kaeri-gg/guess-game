@@ -166,6 +166,7 @@ export class Session {
     markWrongInput() {
         this.playerInput.focus();
         this.playerInput.select();
+        this.playerInput.effect('shake');
     }
 
     guess() {
@@ -176,14 +177,14 @@ export class Session {
         if (this.game.isGreaterThan(inputValue)) {
             this.hintDiv.fadeIn();
             this.hintIcon.removeClass('fa-arrow-up text-green-500').addClass('fa-arrow-down text-red-500');
-            this.hintText.text('lower!');
+            this.hintText.html(`Your number <b>(${inputValue})</b> is <b>lower</b> than target!`);
             this.markWrongInput();
         }
 
         if (this.game.isLessThan(inputValue)) {
             this.hintDiv.fadeIn();
             this.hintIcon.removeClass('fa-arrow-down text-red-500').addClass('fa-arrow-up text-green-500');
-            this.hintText.text('higher!');
+            this.hintText.html(`Your number <b>(${inputValue})</b> is <b>higher</b> than target!`);
             this.markWrongInput();
         }
 
@@ -193,6 +194,12 @@ export class Session {
             this.hintDiv.hide();
             this.playerSubmitDiv.hide();
             this.newGameButtonsDiv.show('fast');
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+            });
         }
     }
 }
