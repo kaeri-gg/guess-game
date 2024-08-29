@@ -22,6 +22,11 @@ export class Session {
     this.playerSubmitDiv = $('#playerSubmitDiv');
     this.playerSubmitBtn = $('#playerSubmitBtn');
 
+    this.bestScoreName = $('#score>.best>.name');
+    this.bestScoreTime = $('#score>.best>.time');
+    this.currentScoreName = $('#score>.current>.name');
+    this.currentScoreTime = $('#score>.current>.time');
+
     this.modeText = $('#modeText');
     this.hintText = $('#hintText');
     this.hintIcon = $('#hintIcon');
@@ -111,6 +116,7 @@ export class Session {
     if (this.counter === 0) {
       this.showNewSession();
       this.stopTimer();
+      this.game.startTimer();
     }
   }
 
@@ -171,7 +177,13 @@ export class Session {
     const mode = this.selectedMode;
 
     this.playerNameText.text(this.playerNameInput.val());
-    this.modeText.text(this.game.getFormattedMode());
+    this.modeText.html(this.game.getFormattedMode());
+
+    this.currentScoreName.text(this.playerNameInput.val());
+    this.currentScoreTime.text('0.00');
+
+    this.bestScoreName.text('Unknown');
+    this.bestScoreTime.text('0.00');
   }
 
   markWrongInput() {
@@ -218,6 +230,13 @@ export class Session {
         spread: 70,
         origin: { y: 0.6 },
       });
+
+      this.game.stopTimer();
+
+      const timeMs = this.game.getPlayerTime();
+      const timeSc = timeMs / 1000;
+      const formattedTime = timeSc.toFixed(2);
+      this.currentScoreTime.text(formattedTime);
     }
   }
 }
