@@ -3,205 +3,223 @@ import { Game } from './game';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export class Session {
-    constructor() {
-        this.countdownMainDiv = $('#countdownMainDiv');
-        this.welcomeMainDiv = $('#welcomeMainDiv');
-        this.startGameMainDiv = $('#startGameMainDiv');
-        this.startBtn = $('#startBtn');
-        this.counterDiv = $('#counterText');
-        this.newGameButtonsDiv = $('#newGameButtonsDiv');
-        this.startNewBtn = $('#startNewBtn');
-        this.startAgainBtn = $('#startAgainBtn');
-        this.modeDiv = $('#modeDiv');
-        this.modes = $('input[name="mode"]');
+  constructor() {
+    this.countdownMainDiv = $('#countdownMainDiv');
+    this.welcomeMainDiv = $('#welcomeMainDiv');
+    this.startGameMainDiv = $('#startGameMainDiv');
+    this.newGameButtonsDiv = $('#newGameButtonsDiv');
+    this.modeDiv = $('#modeDiv');
+    this.counterDiv = $('#counterText');
+    this.startBtn = $('#startBtn');
+    this.startNewBtn = $('#startNewBtn');
+    this.startAgainBtn = $('#startAgainBtn');
+    this.modes = $('input[name="mode"]');
 
-        this.playerNameInput = $('#playerNameInput');
-        this.playerNameText = $('#playerNameText');
-        this.playerInput = $('#playerInput');
-        this.playerSubmitDiv = $('#playerSubmitDiv');
-        this.playerSubmitBtn = $('#playerSubmitBtn');
+    this.playerInputDiv = $('#playerInputDiv');
+    this.playerNameInput = $('#playerNameInput');
+    this.playerNameText = $('#playerNameText');
+    this.playerInput = $('#playerInput');
+    this.playerSubmitDiv = $('#playerSubmitDiv');
+    this.playerSubmitBtn = $('#playerSubmitBtn');
 
-        this.modeText = $('#modeText');
-        this.hintText = $('#hintText');
-        this.hintIcon = $('#hintIcon');
-        this.hintDiv = $('#hintDiv');
-        this.youWonDiv = $('#youWonDiv');
-        this.youWonText = $('#youWonText');
+    this.modeText = $('#modeText');
+    this.hintText = $('#hintText');
+    this.hintIcon = $('#hintIcon');
+    this.hintDiv = $('#hintDiv');
+    this.youWonDiv = $('#youWonDiv');
+    this.youWonText = $('#youWonText');
 
-        this.easyModeOption = $('#easyMode');
-        this.normalModeOption = $('#normalMode');
-        this.hardModeOption = $('#hardMode');
+    this.easyModeOption = $('#easyMode');
+    this.normalModeOption = $('#normalMode');
+    this.hardModeOption = $('#hardMode');
 
-        this.game = new Game();
+    this.enterGameSound = $('#enterGameSound')[0];
+    this.newGameSound = $('#newGameSound')[0];
+    this.hintSound = $('#hintSound')[0];
+    this.winSound = $('#winSound')[0];
+    this.newBestSound = $('#newBestSound')[0];
 
-        this.showWelcomePage();
-        this.subscribeEventListeners();
-        this.resetEverything();
-    }
+    this.game = new Game();
 
-    subscribeEventListeners() {
-        this.startBtn.on('click', () => {
-            this.selectedMode = $('input[name="mode"]:checked').val();
+    this.showWelcomePage();
+    this.subscribeEventListeners();
+    this.resetEverything();
+  }
 
-            if (!this.playerNameInput.val()) {
-                this.playerNameInput.effect('shake');
-                return;
-            }
-            if (!this.selectedMode) {
-                this.modeDiv.effect('shake');
-                return;
-            }
+  subscribeEventListeners() {
+    this.startBtn.on('click', () => {
+      this.selectedMode = $('input[name="mode"]:checked').val();
 
-            this.game.setMode(this.selectedMode);
-            this.startTimer();
-            this.showCountDownPage();
-        });
+      if (!this.playerNameInput.val()) {
+        this.hintSound.play();
+        this.playerNameInput.effect('shake');
+        return;
+      }
+      if (!this.selectedMode) {
+        this.hintSound.play();
+        this.modeDiv.effect('shake');
+        return;
+      }
 
-        this.playerSubmitBtn.on('click', () => {
-            this.guess();
-        });
+      this.enterGameSound.play();
+      this.game.setMode(this.selectedMode);
+      this.startTimer();
+      this.showCountDownPage();
+    });
 
-        this.startGameMainDiv.on('keydown', (event) => {
-            if (event.code === 'Enter') {
-                this.guess();
-            }
-        });
+    this.playerSubmitBtn.on('click', () => {
+      this.guess();
+    });
 
-        this.startNewBtn.on('click', () => {
-            this.showWelcomePage();
-        });
+    this.startGameMainDiv.on('keydown', (event) => {
+      if (event.code === 'Enter') {
+        this.guess();
+      }
+    });
 
-        this.startAgainBtn.on('click', () => {
-            this.tryAgain();
-        });
+    this.startNewBtn.on('click', () => {
+      this.newGameSound.play();
+      this.showWelcomePage();
+    });
 
-        this.playerInput
-            .on('click', () => {
-                this.playerInput.val('');
-            })
-            .on('keydown', () => {
-                this.hintDiv.hide('fast');
-            });
-    }
+    this.startAgainBtn.on('click', () => {
+      this.newGameSound.play();
+      this.tryAgain();
+    });
 
-    startTimer() {
-        this.timerId = setInterval(() => this.countDown(), 1000);
-    }
-
-    stopTimer() {
-        clearInterval(this.timerId);
-    }
-
-    countDown() {
-        this.counter--;
-
-        this.counterDiv.text(this.counter);
-
-        if (this.counter === 0) {
-            this.showNewSession();
-            this.stopTimer();
-        }
-    }
-
-    // show and start new session
-    showNewSession() {
-        this.showStartGamePage();
-        this.showGameDetails();
-    }
-
-    showWelcomePage() {
-        this.countdownMainDiv.hide();
-        this.startGameMainDiv.hide();
-        this.welcomeMainDiv.show(); // display
-        this.resetEverything();
-    }
-
-    showCountDownPage() {
-        this.welcomeMainDiv.hide();
-        this.startGameMainDiv.hide();
-        this.countdownMainDiv.show();
-    }
-
-    showStartGamePage() {
-        this.welcomeMainDiv.hide();
-        this.countdownMainDiv.hide();
-        this.newGameButtonsDiv.hide();
-
-        this.startGameMainDiv.show();
-        this.playerSubmitDiv.show();
-    }
-
-    resetEverything() {
-        this.resetPartial();
-        this.modes.prop('checked', false); // clear the radio button
-        this.playerNameInput.val('Harry'); // clear the radio button
-    }
-
-    resetPartial() {
-        this.counter = 3;
-        this.counterDiv.text(this.counter);
-        this.playerInput.removeAttr('disabled');
-
+    this.playerInput
+      .on('click', () => {
         this.playerInput.val('');
-        this.hintDiv.hide();
-        this.youWonDiv.hide();
-        this.newGameButtonsDiv.hide();
-        this.playerSubmitDiv.show('slow');
+      })
+      .on('keydown', () => {
+        this.hintDiv.hide('fast');
+      });
+  }
+
+  startTimer() {
+    this.timerId = setInterval(() => this.countDown(), 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.timerId);
+  }
+
+  countDown() {
+    this.counter--;
+    this.counterDiv.text(this.counter);
+
+    if (this.counter === 0) {
+      this.showNewSession();
+      this.stopTimer();
+    }
+  }
+
+  // show and start new session
+  showNewSession() {
+    this.showStartGamePage();
+    this.showGameDetails();
+  }
+
+  showWelcomePage() {
+    this.countdownMainDiv.hide();
+    this.startGameMainDiv.hide();
+    this.welcomeMainDiv.show();
+    this.resetEverything();
+  }
+
+  showCountDownPage() {
+    this.welcomeMainDiv.hide();
+    this.startGameMainDiv.hide();
+    this.countdownMainDiv.show();
+  }
+
+  showStartGamePage() {
+    this.welcomeMainDiv.hide();
+    this.countdownMainDiv.hide();
+    this.newGameButtonsDiv.hide();
+
+    this.startGameMainDiv.show();
+    this.playerSubmitDiv.show();
+  }
+
+  resetEverything() {
+    this.resetPartial();
+    this.modes.prop('checked', false);
+    this.playerNameInput.val('');
+  }
+
+  resetPartial() {
+    this.counter = 3;
+    this.counterDiv.text(this.counter);
+    this.playerInput.removeAttr('disabled');
+
+    this.playerInput.val('');
+    this.hintDiv.hide();
+    this.youWonDiv.hide();
+    this.newGameButtonsDiv.hide();
+    this.playerSubmitDiv.show('slow');
+  }
+
+  tryAgain() {
+    this.resetPartial();
+    this.game.reset();
+    this.showCountDownPage();
+    this.startTimer();
+  }
+
+  showGameDetails() {
+    const mode = this.selectedMode;
+
+    this.playerNameText.text(this.playerNameInput.val());
+    this.modeText.text(this.game.getFormattedMode());
+  }
+
+  markWrongInput() {
+    this.playerInput.focus();
+    this.playerInput.select();
+    this.playerInputDiv.effect('shake');
+  }
+
+  guess() {
+    const inputValue = parseInt(this.playerInput.val());
+    this.hintDiv.hide();
+
+    if (this.game.isGreaterThan(inputValue)) {
+      this.hintSound.play();
+      this.hintDiv.fadeIn();
+      this.hintIcon.removeClass('fa-arrow-up text-green-500').addClass('fa-arrow-down text-red-500');
+      this.hintText.html(`Your number <b>(${inputValue})</b> is <b>lower</b> than target!`);
+      this.markWrongInput();
     }
 
-    tryAgain() {
-        this.resetPartial();
-        this.game.reset();
-        this.showCountDownPage();
-        this.startTimer();
+    if (this.game.isLessThan(inputValue)) {
+      this.hintSound.play();
+      this.hintDiv.fadeIn();
+      this.hintIcon.removeClass('fa-arrow-down text-red-500').addClass('fa-arrow-up text-green-500');
+      this.hintText.html(`Your number <b>(${inputValue})</b> is <b>higher</b> than target!`);
+      this.markWrongInput();
     }
 
-    showGameDetails() {
-        const mode = this.selectedMode;
+    if (this.game.isEqualTo(inputValue)) {
+      this.winSound.play();
+      this.youWonDiv.show();
+      this.playerInput.attr('disabled', '');
+      this.hintDiv.hide();
+      this.playerSubmitDiv.hide();
 
-        this.playerNameText.text(this.playerNameInput.val());
-        this.modeText.text(this.game.getFormattedMode());
+      this.newGameButtonsDiv.fadeIn();
+
+      setTimeout(() => {
+        this.newGameButtonsDiv.addClass('animate-bounce');
+      }, 2300);
+
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
     }
-
-    markWrongInput() {
-        this.playerInput.focus();
-        this.playerInput.select();
-        this.playerInput.effect('shake');
-    }
-
-    guess() {
-        // TODO: get the player name
-        const inputValue = parseInt(this.playerInput.val());
-        this.hintDiv.hide();
-
-        if (this.game.isGreaterThan(inputValue)) {
-            this.hintDiv.fadeIn();
-            this.hintIcon.removeClass('fa-arrow-up text-green-500').addClass('fa-arrow-down text-red-500');
-            this.hintText.html(`Your number <b>(${inputValue})</b> is <b>lower</b> than target!`);
-            this.markWrongInput();
-        }
-
-        if (this.game.isLessThan(inputValue)) {
-            this.hintDiv.fadeIn();
-            this.hintIcon.removeClass('fa-arrow-down text-red-500').addClass('fa-arrow-up text-green-500');
-            this.hintText.html(`Your number <b>(${inputValue})</b> is <b>higher</b> than target!`);
-            this.markWrongInput();
-        }
-
-        if (this.game.isEqualTo(inputValue)) {
-            this.youWonDiv.show();
-            this.playerInput.attr('disabled', '');
-            this.hintDiv.hide();
-            this.playerSubmitDiv.hide();
-            this.newGameButtonsDiv.show('fast');
-
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-            });
-        }
-    }
+  }
 }
 
 // Instantiate and start the GameApp

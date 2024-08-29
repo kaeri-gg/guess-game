@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -12,40 +11,50 @@
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 
     <title>Guess Game</title>
-</head>
+  </head>
 
-<body class="bg-default-gray100">
+  <body class="bg-default-gray100">
     <div id="app"></div>
     <div class="flex h-screen w-full flex-col items-center justify-between">
-        <!-------------------- welcome page --------------------->
-        <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
-            <img src="/guess-game-logo.svg" class="mt-5 h-40 md:h-72" />
-            <div class="flex w-full flex-col items-center justify-center space-y-6 px-7">
-                <!-----------game mechanics ---------->
-                <div class="justify-center self-center md:my-8 md:w-2/5 2xl:w-1/4">
-                    <p class="text-center">
-                        🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
-                    </p>
+      <!-------------------- welcome page --------------------->
+      <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
+        <img src="/guess-game-logo.svg" class="mt-5 h-40 md:h-72" />
+        <div class="flex w-full flex-col items-center justify-center space-y-6 px-7">
+          <!-----------game mechanics ---------->
+          <div class="justify-center self-center md:my-8 md:w-2/5 2xl:w-1/4">
+            <p class="text-center">
+              🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
+              would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
+            </p>
+          </div>
+
+          <!-----------name input ---------->
+          <div class="">
+            <input
+              type="text"
+              id="playerNameInput"
+              autocomplete="none"
+              autofocus="on"
+              class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
+              placeholder="Your name..."
+            />
+          </div>
+
+          <div
+            id="modeDiv"
+            class="flex w-full flex-row items-center justify-center space-x-2 md:w-2/4 md:pb-8 2xl:w-1/4"
+          >
+            <!-----------mode: easy ---------->
+            <div class="flex w-full flex-col items-center justify-center">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Haerin</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 4s</p>
                 </div>
+              </div>
 
-                <!-----------name input ---------->
-                <div class="">
-                    <input type="text" id="playerNameInput" autocomplete="none" autofocus="on" class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
-                        placeholder="Your name..." />
-                </div>
-
-                <div id="modeDiv" class="flex w-full flex-row items-center justify-center space-x-2 md:w-2/4 md:pb-8 2xl:w-1/4">
-                    <!-----------mode: easy ---------->
-                    <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Haerin</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 4s</p>
-                            </div>
-                        </div>
-
-                        <label class="radio-label w-full">
+              <label class="radio-label w-full">
                 <input type="radio" id="easyMode" name="mode" value="Easy" class="peer hidden" />
                 <div
                   class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
@@ -53,19 +62,19 @@
                   Easy
                 </div>
               </label>
-                    </div>
+            </div>
 
-                    <!-----------mode: normal ---------->
-                    <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Kaeri</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 6s</p>
-                            </div>
-                        </div>
+            <!-----------mode: normal ---------->
+            <div class="flex w-full flex-col items-center justify-center">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Kaeri</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 6s</p>
+                </div>
+              </div>
 
-                        <label class="radio-label w-full">
+              <label class="radio-label w-full">
                 <input type="radio" id="normalMode" name="mode" value="Normal" class="peer hidden" />
                 <div
                   class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
@@ -73,105 +82,141 @@
                   Normal
                 </div>
               </label>
-                    </div>
+            </div>
 
-                    <!-----------mode: hard ---------->
-                    <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
-                            <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
-                            <div class="flex flex-row">
-                                <p class="items-center justify-center text-center italic text-default-gray300">Harry</p>
-                                <p class="items-center justify-center text-center italic text-default-gray300">- 7s</p>
-                            </div>
-                        </div>
+            <!-----------mode: hard ---------->
+            <div class="flex w-full flex-col items-center justify-center">
+              <div class="flex flex-col">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-row">
+                  <p class="items-center justify-center text-center italic text-default-gray300">Harry</p>
+                  <p class="items-center justify-center text-center italic text-default-gray300">- 7s</p>
+                </div>
+              </div>
 
-                        <label class="radio-label w-full">
+              <label class="radio-label w-full">
                 <input type="radio" id="hardMode" name="mode" value="Hard" class="peer hidden" />
                 <div
-                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-cyan-500 peer-checked:text-white"
                 >
                   Hard
                 </div>
               </label>
-                    </div>
-                </div>
-                <div class="w-full md:w-2/4 2xl:w-1/4">
-                    <button id="startBtn" class="h-16 w-full rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+            </div>
+          </div>
+          <div class="w-full md:w-2/4 2xl:w-1/4">
+            <button
+              id="startBtn"
+              class="h-16 w-full animate-bounce rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md"
+            >
               START
             </button>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <!-------------------- countdown --------------------->
-        <div id="countdownMainDiv" style="display: none" class="flex h-screen w-full flex-col items-center justify-center bg-default-orange">
-            <p id="counterText" class="animate-pump font-display text-[15rem] font-bold text-default-peach"></p>
+      <!-------------------- countdown --------------------->
+      <div
+        id="countdownMainDiv"
+        style="display: none"
+        class="flex h-screen w-full flex-col items-center justify-center bg-default-orange"
+      >
+        <p id="counterText" class="animate-pump font-display text-[15rem] font-bold text-default-peach"></p>
+      </div>
+
+      <!-------------------- game starts page --------------------->
+      <div id="startGameMainDiv" style="display: flex" class="flex h-screen w-full flex-col justify-between">
+        <!-------------------- details --------------------->
+
+        <div class="flex w-full flex-row items-center justify-between p-8">
+          <div class="flex w-1/2 flex-col bg-default-gray200 p-4 md:w-60 md:flex-row">
+            <span class="md:p-2">Mode: </span>
+            <span id="modeText" class="font-bold md:p-2">Normal (1-100) </span>
+          </div>
+          <div
+            id="timerDiv"
+            class="flex w-1/2 flex-col bg-default-orange p-4 text-right text-white md:w-60 md:flex-row"
+          >
+            <span class="md:p-2">Timer:</span>
+            <span id="timer" class="font-bold md:p-2">20s</span>
+          </div>
         </div>
-
-        <!-------------------- game starts page --------------------->
-        <div id="startGameMainDiv" style="display: flex" class="flex h-screen w-full flex-col justify-between">
-            <!-------------------- details --------------------->
-
-            <div class="flex w-full flex-row items-center justify-between p-8">
-                <div class="flex w-1/2 flex-col bg-default-gray200 p-4 md:w-60 md:flex-row">
-                    <span class="md:p-2">Mode: </span>
-                    <span id="modeText" class="font-bold md:p-2">Normal (1-100) </span>
-                </div>
-                <div id="timerDiv" class="flex w-1/2 flex-col bg-default-orange p-4 text-right text-white md:w-60 md:flex-row">
-                    <span class="md:p-2">Timer:</span>
-                    <span id="timer" class="font-bold md:p-2">20s</span>
-                </div>
+        <!-------------------- main --------------------->
+        <div class="flex h-full flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <p>Player:</p>
+            <p id="playerNameText" class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
+          </div>
+          <div id="playerInputDiv" class="flex flex-col items-center p-7">
+            <input
+              id="playerInput"
+              type="number"
+              maxlength="4"
+              class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none"
+              placeholder="00"
+            />
+            <div id="hintDiv" class="flex flex-row space-x-1 p-3">
+              <div class="h-6 w-5">
+                <i id="hintIcon" class="fas"></i>
+              </div>
+              <span id="hintText" class="font-display"></span>
             </div>
-            <!-------------------- main --------------------->
-            <div class="flex h-full flex-col items-center justify-center">
-                <div class="flex flex-col items-center">
-                    <p>Player:</p>
-                    <p id="playerNameText" class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
-                </div>
-                <div class="flex flex-col items-center p-7">
-                    <input id="playerInput" type="number" maxlength="4" class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none" placeholder="00" />
-                    <div id="hintDiv" class="flex flex-row space-x-1 p-3">
-                        <div class="h-6 w-5">
-                            <i id="hintIcon" class="fas"></i>
-                        </div>
-                        <span id="hintText" class="font-display"></span>
-                    </div>
 
-                    <div id="youWonDiv" class="flex flex-row space-x-1 p-3">
-                        <span id="youWonText" class="font-display text-4xl font-bold text-green-500">You're right!</span>
-                    </div>
-                </div>
-                <!-------------------- submit button --------------------->
-                <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
-                    <button id="playerSubmitBtn" class="h-16 w-80 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+            <div id="youWonDiv" class="flex flex-row space-x-1 p-3">
+              <span id="youWonText" class="font-display text-4xl font-bold text-green-500">You're right!</span>
+            </div>
+          </div>
+          <!-------------------- submit button --------------------->
+          <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
+            <button
+              id="playerSubmitBtn"
+              class="h-16 w-80 animate-bounce rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md"
+            >
               SUBMIT
             </button>
-                </div>
+          </div>
 
-                <!-------------------- new and start again button --------------------->
-                <div id="newGameButtonsDiv" class="w-100 flex flex-col space-y-3 md:flex-row md:space-x-4 md:space-y-0">
-                    <button id="startNewBtn" class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+          <!-------------------- new and start again button --------------------->
+          <div
+            id="newGameButtonsDiv"
+            class="w-100 flex flex-col space-y-3 duration-1000 md:flex-row md:space-x-4 md:space-y-0"
+          >
+            <button
+              id="startNewBtn"
+              class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow ease-in-out hover:shadow-xl active:shadow-md"
+            >
               NEW
             </button>
-                    <button id="startAgainBtn" class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+            <button
+              id="startAgainBtn"
+              class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md"
+            >
               PLAY AGAIN
             </button>
-                </div>
+          </div>
 
-                <!-------------------- best score --------------------->
-                <div class="flex w-full flex-col items-end p-8">
-                    <p class="font-display">Best:</p>
-                    <p id="bestPlayerName" class="font-bebas text-5xl text-black">Kaeri</p>
-                    <p id="bestTime" class="font-bebas text-4xl text-default-orange">6.8S</p>
-                </div>
-            </div>
+          <!-------------------- best score --------------------->
+          <div class="flex w-full flex-col items-end p-8">
+            <p class="font-display">Best:</p>
+            <p id="bestPlayerName" class="font-bebas text-5xl text-black">Kaeri</p>
+            <p id="bestTime" class="font-bebas text-4xl text-default-orange">6.8S</p>
+          </div>
         </div>
+      </div>
 
-        <!-------------------- footer --------------------->
-        <div class="flex bg-transparent" style="display: none">
-            <span class="flex h-12 items-center">Footer details here.</span>
-        </div>
+      <!-------------------- footer --------------------->
+      <div class="flex bg-transparent" style="display: none">
+        <span class="flex h-12 items-center">Footer details here.</span>
+      </div>
     </div>
-</body>
-
+  </body>
+  <audio id="background-music" autoplay loop>
+    <source src="music/bgm.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="enterGameSound" src="music/enter-game.mp3" preload="auto"></audio>
+  <audio id="newGameSound" src="music/new-game.mp3" preload="auto"></audio>
+  <audio id="hintSound" src="music/hint.mp3" preload="auto"></audio>
+  <audio id="winSound" src="music/win.mp3" preload="auto"></audio>
+  <audio id="newBestSound" src="music/new-best.mp3" preload="auto"></audio>
 </html>
