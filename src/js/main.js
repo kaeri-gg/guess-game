@@ -42,10 +42,13 @@ export class Session {
     this.newGameSound = $('#newGameSound')[0];
     this.hintSound = $('#hintSound')[0];
     this.winSound = $('#winSound')[0];
+    this.errorSound = $('#errorSound')[0];
+
     this.newBestSound = $('#newBestSound')[0];
 
     this.game = new Game();
 
+    //this.showStartGamePage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
@@ -56,12 +59,12 @@ export class Session {
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
-        this.hintSound.play();
+        this.errorSound.play();
         this.playerNameInput.effect('shake');
         return;
       }
       if (!this.selectedMode) {
-        this.hintSound.play();
+        this.errorSound.play();
         this.modeDiv.effect('shake');
         return;
       }
@@ -99,6 +102,10 @@ export class Session {
       .on('keydown', () => {
         this.hintDiv.hide('fast');
       });
+
+    this.modes.on('click', () => {
+      this.hintSound.play();
+    });
   }
 
   startTimer() {
