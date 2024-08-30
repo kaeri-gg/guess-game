@@ -48,8 +48,8 @@ export class Session {
 
     this.game = new Game();
 
-    //this.showStartGamePage();
-    this.showWelcomePage();
+    this.showStartGamePage();
+    //this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
   }

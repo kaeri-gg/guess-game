@@ -13,9 +13,9 @@
     <title>Guess Game</title>
   </head>
 
-  <body class="bg-default-gray100" ontouchstart="">
+  <body class="h-screen w-screen overflow-hidden bg-default-gray100" ontouchstart="">
     <div id="app"></div>
-    <div class="flex h-screen w-screen flex-col items-center justify-between">
+    <div class="flex flex-col items-center justify-between">
       <!-------------------- welcome page --------------------->
       <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
         <img src="/guess-game-logo.svg" class="mt-5 h-40 md:h-72" />
@@ -125,14 +125,14 @@
       <div id="startGameMainDiv" style="display: flex" class="flex h-screen w-full flex-col justify-between">
         <!-------------------- details --------------------->
 
-        <div class="flex w-full flex-row items-center justify-between p-8">
-          <div class="flex w-1/2 flex-col bg-default-gray200 p-4 md:w-60 md:flex-row">
+        <div class="flex w-full flex-row items-center justify-between p-4 md:p-8">
+          <div class="flex w-1/2 flex-col bg-default-gray200 p-3 md:w-60 md:flex-row md:p-4">
             <span class="md:p-2">Mode: </span>
             <span id="modeText" class="font-bold md:p-2">Normal (1-100) </span>
           </div>
           <div
             id="timerDiv"
-            class="flex w-1/2 flex-col bg-default-orange p-4 text-right text-white md:w-60 md:flex-row"
+            class="flex w-1/2 flex-col bg-default-orange p-3 text-right text-white md:w-60 md:flex-row md:p-4"
           >
             <span class="md:p-2">Timer:</span>
             <span id="timer" class="font-bold md:p-2">20s</span>
@@ -144,12 +144,12 @@
             <p>Player:</p>
             <p id="playerNameText" class="font-display text-4xl font-bold uppercase text-black">Yeji</p>
           </div>
-          <div id="playerInputDiv" class="flex flex-col items-center p-7">
+          <div id="playerInputDiv" class="mb-5 flex flex-col items-center p-3 md:p-7">
             <input
               id="playerInput"
               type="number"
               maxlength="4"
-              class="w-56 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-8xl font-bold text-black outline-none"
+              class="w-52 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-6xl font-bold text-black outline-none md:w-56 md:text-8xl"
               placeholder="00"
             />
             <div id="hintDiv" class="flex flex-row space-x-1 p-3">
@@ -167,7 +167,7 @@
           <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
             <button
               id="playerSubmitBtn"
-              class="h-16 w-80 animate-bounce rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md"
+              class="h-12 w-56 animate-bounce rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md md:h-16 md:w-80"
             >
               SUBMIT
             </button>
@@ -193,16 +193,16 @@
           </div>
 
           <!-------------------- best score --------------------->
-          <div id="score" class="flex w-full flex-row justify-between">
-            <div class="current flex flex-col items-start p-8">
-              <p class="font-display">Current:</p>
-              <p class="name font-bebas text-4xl text-black">Unknown</p>
-              <p class="time font-bebas text-4xl text-default-cyan">0.00</p>
+          <div id="score" class="flex w-full flex-row justify-between font-bebas text-3xl md:text-4xl">
+            <div class="current flex flex-col items-start p-4 md:p-8">
+              <p class="font-display text-base">Current:</p>
+              <p class="name text-black">Unknown</p>
+              <p class="time text-default-cyan">0.00</p>
             </div>
-            <div class="best flex flex-col items-end p-8">
-              <p class="font-display">Best:</p>
-              <p class="name font-bebas text-4xl text-black">Unknown</p>
-              <p class="time font-bebas text-4xl text-default-orange">0.00</p>
+            <div class="best flex flex-col items-end p-4 md:p-8">
+              <p class="font-display text-base">Best:</p>
+              <p class="name text-black">Unknown</p>
+              <p class="time text-default-orange">0.00</p>
             </div>
           </div>
 

@@ -6,7 +6,7 @@ export default {
   theme: {
     fontFamily: {
       display: ['Kanit', 'sans-serif'],
-      bebas: ['bebas', 'sans-serif'],
+      bebas: ['Bebas', 'Kanit'],
       body: ['Inter', 'sans-serif'],
     },
     colors: {
