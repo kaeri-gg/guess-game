@@ -6,7 +6,7 @@ export default {
   theme: {
     fontFamily: {
       display: ['Kanit', 'sans-serif'],
-      bebas: ['bebas', 'sans-serif'],
+      bebas: ['Bebas', 'Kanit'],
       body: ['Inter', 'sans-serif'],
     },
     colors: {
@@ -562,6 +562,10 @@ export default {
       30: '30',
       40: '40',
       50: '50',
+    },
+    screens: {
+      xs: '375px',
+      ...defaultTheme.screens,
     },
   },
   plugins: [],

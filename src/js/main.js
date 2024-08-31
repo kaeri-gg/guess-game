@@ -1,5 +1,6 @@
 //import '../styles/style.css';
 import { Game } from './game';
+import { Countdown } from '../services/countdown';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export class Session {
@@ -42,10 +43,14 @@ export class Session {
     this.newGameSound = $('#newGameSound')[0];
     this.hintSound = $('#hintSound')[0];
     this.winSound = $('#winSound')[0];
+    this.errorSound = $('#errorSound')[0];
+
     this.newBestSound = $('#newBestSound')[0];
 
     this.game = new Game();
+    this.countdownTimer = new Countdown(3);
 
+    //this.showStartGamePage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
@@ -56,20 +61,19 @@ export class Session {
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
-        this.hintSound.play();
+        this.errorSound.play();
         this.playerNameInput.effect('shake');
         return;
       }
       if (!this.selectedMode) {
-        this.hintSound.play();
+        this.errorSound.play();
         this.modeDiv.effect('shake');
         return;
       }
 
       this.enterGameSound.play();
       this.game.setMode(this.selectedMode);
-      this.startTimer();
-      this.showCountDownPage();
+      this.countdownTimer.start();
     });
 
     this.playerSubmitBtn.on('click', () => {
@@ -99,25 +103,23 @@ export class Session {
       .on('keydown', () => {
         this.hintDiv.hide('fast');
       });
-  }
 
-  startTimer() {
-    this.timerId = setInterval(() => this.countDown(), 1000);
-  }
+    this.modes.on('click', () => {
+      this.hintSound.play();
+    });
 
-  stopTimer() {
-    clearInterval(this.timerId);
-  }
+    this.countdownTimer.onStart = () => {
+      this.showCountDownPage();
+    };
 
-  countDown() {
-    this.counter--;
-    this.counterDiv.text(this.counter);
+    this.countdownTimer.onTick = (countDownValue) => {
+      this.counterDiv.text(countDownValue);
+    };
 
-    if (this.counter === 0) {
+    this.countdownTimer.onFinish = () => {
       this.showNewSession();
-      this.stopTimer();
       this.game.startTimer();
-    }
+    };
   }
 
   // show and start new session
@@ -155,8 +157,6 @@ export class Session {
   }
 
   resetPartial() {
-    this.counter = 3;
-    this.counterDiv.text(this.counter);
     this.playerInput.removeAttr('disabled');
 
     this.playerInput.val('');
@@ -169,8 +169,7 @@ export class Session {
   tryAgain() {
     this.resetPartial();
     this.game.reset();
-    this.showCountDownPage();
-    this.startTimer();
+    this.countdownTimer.start();
   }
 
   showGameDetails() {
@@ -188,7 +187,7 @@ export class Session {
 
   markWrongInput() {
     this.playerInput.focus();
-    this.playerInput.select();
+    //this.playerInput.select();
     this.playerInputDiv.effect('shake');
   }
 
