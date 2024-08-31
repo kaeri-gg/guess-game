@@ -15,14 +15,24 @@
 </head>
 
 <body class="h-screen w-screen overflow-hidden bg-default-gray100" ontouchstart="">
-    <div id="app"></div>
+
+
     <div class="flex flex-col items-center justify-between">
+
         <!-------------------- welcome page --------------------->
-        <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4">
-            <img src="/guess-game-logo.svg" class="mt-5 h-40 md:h-72" />
-            <div class="flex w-full flex-col items-center justify-center space-y-6 px-7">
+        <div id="welcomeMainDiv" class="flex h-screen w-full flex-col items-center justify-center space-y-4 xs:text-sm text-base">
+            <!-------------------- controls --------------------->
+            <div class="absolute controls h-screen right-0">
+                <div class="flex flex-row justify-end space-x-4 m-3">
+                    <button class="bg-default-gray200 text-gray-500 rounded-lg border border-gray-200 flex h-14 items-center justify-center w-14 text-xl"><i class="fa-solid fa-gear"></i></button>
+                    <button class="bg-default-gray200 text-gray-500 rounded-lg border border-gray-200 flex h-14 items-center justify-center w-14 text-xl"><i class="fa-solid fa-volume-low"></i></button>
+                </div>
+            </div>
+
+            <img src="/guess-game-logo.svg" class="mt-5 sm:h-40 md:h-72 xs:h-32" />
+            <div class="flex w-full flex-col items-center justify-center space-y-6 px-7 xs:space-y-4">
                 <!-----------game mechanics ---------->
-                <div class="justify-center self-center md:my-8 md:w-2/5 2xl:w-1/4">
+                <div class="justify-center self-center md:my-6 lg:my-8 md:w-2/5 2xl:w-1/4">
                     <p class="text-center">
                         🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
                     </p>
@@ -34,10 +44,10 @@
                         placeholder="Your name..." />
                 </div>
 
-                <div id="modeDiv" class="flex w-full flex-row items-center justify-center space-x-2 pb-8 md:w-2/4 2xl:w-1/4">
+                <div id="modeDiv" class="flex w-full flex-row xs:text-sm md:text-base items-center justify-center space-x-2 pb-8 md:w-2/4 2xl:w-1/4">
                     <!-----------mode: easy ---------->
                     <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
+                        <div class="flex flex-col xs:mb-3 md:mb-4">
                             <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                             <div class="flex flex-row">
                                 <p class="items-center justify-center text-center italic text-default-gray300">Haerin</p>
@@ -48,7 +58,7 @@
                         <label class="radio-label w-full">
                 <input type="radio" id="easyMode" name="mode" value="Easy" class="peer hidden" />
                 <div
-                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
                 >
                   Easy
                 </div>
@@ -57,7 +67,7 @@
 
                     <!-----------mode: normal ---------->
                     <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
+                        <div class="flex flex-col xs:mb-3 md:mb-4">
                             <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                             <div class="flex flex-row">
                                 <p class="items-center justify-center text-center italic text-default-gray300">Kaeri</p>
@@ -68,7 +78,7 @@
                         <label class="radio-label w-full">
                 <input type="radio" id="normalMode" name="mode" value="Normal" class="peer hidden" />
                 <div
-                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
                 >
                   Normal
                 </div>
@@ -77,7 +87,7 @@
 
                     <!-----------mode: hard ---------->
                     <div class="flex w-full flex-col items-center justify-center">
-                        <div class="flex flex-col">
+                        <div class="flex flex-col xs:mb-3 md:mb-4">
                             <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
                             <div class="flex flex-row">
                                 <p class="items-center justify-center text-center italic text-default-gray300">Harry</p>
@@ -88,7 +98,7 @@
                         <label class="radio-label w-full">
                 <input type="radio" id="hardMode" name="mode" value="Hard" class="peer hidden" />
                 <div
-                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display text-base font-bold shadow-lg transition-transform ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
                 >
                   Hard
                 </div>
@@ -96,7 +106,7 @@
                     </div>
                 </div>
                 <div class="w-full md:w-2/4 2xl:w-1/4">
-                    <button id="startBtn" class="h-16 w-full animate-bounce rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md">
+                    <button id="startBtn" class="xs:h-14 xs:text-sm h-16 w-full animate-bounce rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md">
               START
             </button>
                 </div>
@@ -109,7 +119,7 @@
         </div>
 
         <!-------------------- game starts page --------------------->
-        <div id="startGameMainDiv" style="display: flex" class="flex h-screen w-full flex-col justify-between">
+        <div id="startGameMainDiv" style="display: none" class="flex h-screen w-full flex-col justify-between">
             <!-------------------- details --------------------->
 
             <div class="xs:p-4 xs:text-base flex w-full flex-row items-center justify-between p-4 md:p-8">
@@ -138,7 +148,7 @@
                     </div>
 
                     <div id="youWonDiv" class="flex flex-row space-x-1 p-3">
-                        <span id="youWonText" class="font-display text-4xl font-bold text-green-500">You're right!</span>
+                        <span id="youWonText" class="font-display xs:text-2xl text-4xl font-bold text-green-500">You're right!</span>
                     </div>
                 </div>
                 <!-------------------- submit button --------------------->
@@ -150,10 +160,10 @@
 
                 <!-------------------- new and start again button --------------------->
                 <div id="newGameButtonsDiv" class="w-100 flex flex-col space-y-3 duration-1000 md:flex-row md:space-x-4 md:space-y-0">
-                    <button id="startNewBtn" class="h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow ease-in-out hover:shadow-xl active:shadow-md">
+                    <button id="startNewBtn" class="xs:w-48 xs:h-10 xs:text-base h-16 w-60 rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow ease-in-out hover:shadow-xl active:shadow-md">
               NEW
             </button>
-                    <button id="startAgainBtn" class="h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
+                    <button id="startAgainBtn" class="xs:w-48 xs:h-10 xs:text-base h-16 w-60 rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl active:shadow-md">
               PLAY AGAIN
             </button>
                 </div>
@@ -249,7 +259,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-------------------- footer --------------------->
