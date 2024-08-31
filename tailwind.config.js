@@ -563,6 +563,10 @@ export default {
       40: '40',
       50: '50',
     },
+    screens: {
+      xs: '375px',
+      ...defaultTheme.screens,
+    },
   },
   plugins: [],
 };
