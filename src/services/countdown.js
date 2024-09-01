@@ -33,9 +33,9 @@ export class Countdown {
      * @private
      */
     this.callback = {
+      onStart: () => {},
       onTick: () => {},
       onFinish: () => {},
-      onStart: () => {},
     };
   }
 
