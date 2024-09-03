@@ -24,12 +24,14 @@
         <div class="controls absolute right-0 h-screen">
           <div class="m-3 flex flex-row items-center justify-end space-x-4">
             <button
-              class="h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+              type="button"
+              class="settings-control h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
             >
               <i class="fa-solid fa-gear"></i>
             </button>
             <button
-              class="h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+              type="button"
+              class="sound-toggle h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
             >
               <i class="fa-solid fa-volume-low"></i>
             </button>
@@ -38,39 +40,36 @@
 
         <!-------------------- settings --------------------->
 
-        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-          <!--
-    Background backdrop, show/hide based on modal state.
-
-    Entering: "ease-out duration-300"
-      From: "opacity-0"
-      To: "opacity-100"
-    Leaving: "ease-in duration-200"
-      From: "opacity-100"
-      To: "opacity-0"
-  -->
+        <div
+          style="display: none"
+          class="modal relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
           <div
-            class="fixed inset-0 bg-slate-900/25 bg-opacity-75 backdrop-blur transition-opacity"
+            class="modal-overlay fixed inset-0 bg-slate-900/25 bg-opacity-75 backdrop-blur transition-opacity"
             aria-hidden="true"
           ></div>
           <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
             <div class="flex min-h-full flex-col items-end justify-center p-4 text-center sm:items-center sm:p-0">
-              <!--
-        Modal panel, show/hide based on modal state.
-
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          To: "opacity-100 translate-y-0 sm:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 sm:scale-100"
-          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-      -->
               <div
-                class="relative w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                class="modal-container relative w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
               >
+                <!-- Close button -->
+                <button
+                  type="button"
+                  class="close absolute right-5 top-5 text-base text-gray-400 hover:text-gray-500 focus:outline-none"
+                  aria-label="Close"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+
+                <!-- Game Settings Controls -->
+
                 <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div class="sm:flex sm:items-start">
-                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <div class="mt-3 sm:ml-4 sm:mt-0 sm:text-left">
                       <h3
                         class="font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
                         id="modal-title"
@@ -80,7 +79,7 @@
                       <div class="mt-2">
                         <p class="text-sm text-gray-500">Adjust the sounds according to your like:</p>
                       </div>
-                      <div class="my-7">
+                      <div class="m-7 mb-0">
                         <div class="my-5">
                           <div class="flex flex-col items-start space-y-2">
                             <label for="range-background" class="mb-2 text-sm font-medium text-gray-700"
@@ -93,14 +92,21 @@
                               min="1"
                               max="100"
                               step="1"
-                              class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-default-cyan transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
                             />
-
-                            <!-- <datalist id="datalist">
-                              <option value="1">1</option>
-                              <option value="10">2</option>
-                              <option value="50">3</option>
-                            </datalist> -->
+                            <datalist id="datalist">
+                              <option value="1">|</option>
+                              <option value="10">|</option>
+                              <option value="20">|</option>
+                              <option value="30">|</option>
+                              <option value="40">|</option>
+                              <option value="50">|</option>
+                              <option value="60">|</option>
+                              <option value="70">|</option>
+                              <option value="80">|</option>
+                              <option value="90">|</option>
+                              <option value="100">|</option>
+                            </datalist>
                           </div>
                         </div>
                         <div class="my-5">
@@ -110,75 +116,222 @@
                             >
                             <input
                               id="range-effects"
+                              list="datalist"
                               type="range"
                               min="1"
-                              max="4"
+                              max="100"
                               step="1"
-                              class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 accent-default-cyan transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
                             />
                           </div>
                         </div>
-                        <div class="my-7">
-                          <div class="flex flex-col space-y-4">
-                            <label class="text-sm font-medium text-gray-700">Select an option:</label>
+                        <div class="mt-7">
+                          <div class="flex flex-col">
+                            <label for="range-effects" class="mb-2 text-sm font-medium text-gray-700"
+                              >Choose background song:</label
+                            >
 
-                            <label class="inline-flex items-center">
-                              <input
-                                type="radio"
-                                name="options"
-                                value="1"
-                                class="h-4 w-4 accent-default-orange focus:ring-default-orange"
-                              />
-                              <span class="ml-2 text-gray-700">Option 1</span>
-                            </label>
+                            <!-- default -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="default"
+                              >
+                                <input
+                                  checked
+                                  name="sound"
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="default"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="html">
+                                Default
+                              </label>
+                            </div>
 
-                            <label class="inline-flex items-center">
-                              <input
-                                type="radio"
-                                name="options"
-                                value="2"
-                                class="h-4 w-4 border-gray-300 accent-default-orange focus:ring-default-orange"
-                              />
-                              <span class="ml-2 text-gray-700">Option 2</span>
-                            </label>
+                            <!-- track 1 -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="track1"
+                              >
+                                <input
+                                  name="sound"
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="track1"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track1">
+                                Track 1
+                              </label>
+                            </div>
 
-                            <label class="inline-flex items-center">
-                              <input
-                                type="radio"
-                                name="options"
-                                value="3"
-                                class="h-4 w-4 border-gray-300 accent-default-orange focus:ring-default-orange"
-                              />
-                              <span class="ml-2 text-gray-700">Option 3</span>
-                            </label>
+                            <!-- track 2 -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="track2"
+                              >
+                                <input
+                                  name="sound"
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="track2"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track2">
+                                Track 2
+                              </label>
+                            </div>
 
-                            <label class="inline-flex items-center">
-                              <input
-                                type="radio"
-                                name="options"
-                                value="4"
-                                class="h-4 w-4 border-gray-300 accent-default-orange focus:ring-default-orange"
-                              />
-                              <span class="ml-2 text-gray-700">Option 4</span>
-                            </label>
+                            <!-- track 3 -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="track3"
+                              >
+                                <input
+                                  name="sound"
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="track3"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track3">
+                                Track 3
+                              </label>
+                            </div>
+
+                            <!-- track 4 -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="track4"
+                              >
+                                <input
+                                  name="sound"
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="track4"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track4">
+                                Track 4
+                              </label>
+                            </div>
+
+                            <!-- track 5 -->
+                            <div class="inline-flex items-center">
+                              <label
+                                class="relative flex cursor-pointer items-center rounded-full p-2"
+                                htmlFor="track5"
+                              >
+                                <input
+                                  name="sound
+                                  "
+                                  type="radio"
+                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+                                  id="track5"
+                                />
+                                <span
+                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-3.5 w-3.5"
+                                    viewBox="0 0 16 16"
+                                    fill="currentColor"
+                                  >
+                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                  </svg>
+                                </span>
+                              </label>
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track5">
+                                Track 5
+                              </label>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <!-- Save and Restore Button -->
                 <div class="flex flex-row justify-between bg-gray-50 px-4 py-3 xs:flex-col sm:flex-row sm:px-6">
-                  <button
-                    type="button"
-                    class="inline-flex w-full justify-center rounded-md bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:w-auto"
-                  >
-                    Save
-                  </button>
                   <button
                     type="button"
                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                   >
-                    Cancel
+                    Reset Default
+                  </button>
+                  <button
+                    type="button"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:mt-0 sm:w-auto"
+                  >
+                    Save
                   </button>
                 </div>
               </div>
@@ -306,7 +459,7 @@
             class="flex w-1/2 flex-col bg-default-orange p-3 text-right text-white md:w-60 md:flex-row md:p-4"
           >
             <span class="md:p-2">Timer:</span>
-            <span id="timer" class="font-bold md:p-2">20s</span>
+            <span id="elapsedTime" class="font-bold md:p-2"></span>
           </div>
         </div>
         <!-------------------- main --------------------->
@@ -367,78 +520,114 @@
         </div>
 
         <!-------------------- on-screen keyboard --------------------->
-        <div id="onScreenKeyboardDiv" class="flex w-full flex-col border-b font-display text-xl active:shadow-inner">
+        <div
+          id="onScreenKeyboardDiv"
+          class="flex w-full flex-col gap-0.5 border-b font-display text-xl active:shadow-inner"
+        >
           <!------ 1-3 ---->
-          <div class="flex w-full flex-row justify-between border-gray-300 bg-default-gray200">
+          <div class="flex w-full flex-row justify-between gap-0.5">
             <div class="w-2/6">
-              <button class="w-full border-r active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="1">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="1"
+              >
                 1
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full border-r active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="2">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="2"
+              >
                 2
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="3">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="3"
+              >
                 3
               </button>
             </div>
           </div>
           <!------ 4-6 ---->
-          <div class="flex w-full flex-row justify-between border-gray-300 bg-default-gray200">
+          <div class="flex w-full flex-row justify-between gap-0.5">
             <div class="w-2/6">
-              <button class="w-full border-r active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="4">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="4"
+              >
                 4
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full border-l active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="5">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="5"
+              >
                 5
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="6"
+              >
                 6
               </button>
             </div>
           </div>
           <!------ 7-9 ---->
-          <div class="flex w-full flex-row justify-between border-gray-300 bg-default-gray200">
+          <div class="flex w-full flex-row justify-between gap-0.5">
             <div class="w-2/6">
-              <button class="w-full border-l active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="7">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="7"
+              >
                 7
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full border-r active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="8">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="8"
+              >
                 8
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="9">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="9"
+              >
                 9
               </button>
             </div>
           </div>
           <!------ 0 ---->
-          <div class="flex w-full flex-row justify-around border-gray-300 bg-default-gray200">
+          <div class="flex w-full flex-row justify-around gap-0.5">
             <div class="w-2/6">
               <button
-                class="w-full border-l active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                class="w-full border-gray-300 bg-default-gray200 text-base active:bg-default-cyan active:shadow-inner xs:h-14 xs:text-sm sm:h-16"
                 data-value="Clear"
               >
                 Clear
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full border-r active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="0">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="0"
+              >
                 0
               </button>
             </div>
             <div class="w-2/6">
-              <button class="w-full active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16" data-value="Backspace">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 text-base active:bg-default-cyan active:shadow-inner xs:h-14 xs:text-sm sm:h-16"
+                data-value="Backspace"
+              >
                 Backspace
               </button>
             </div>

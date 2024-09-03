@@ -1,57 +1,65 @@
 import { generator } from './generator';
 
 export class Game {
-    constructor() {
-        this.modes = {
-            Easy: [1, 10],
-            Normal: [1, 100],
-            Hard: [1, 1000],
-        };
-        this.startedAt = +Infinity;
-        this.stoppedAt = +Infinity;
-    }
+  constructor() {
+    this.modes = {
+      Easy: [1, 10],
+      Normal: [1, 100],
+      Hard: [1, 1000],
+    };
+    this.startedAt = +Infinity;
+    this.stoppedAt = +Infinity;
 
-    setMode(mode) {
-        this.currentMode = mode;
+    this.onTick = () => {};
+  }
 
-        const selectedMode = this.modes[mode];
+  setMode(mode) {
+    this.currentMode = mode;
 
-        if (!selectedMode) throw new Error(`Mode "${mode}" doesn't exists.`);
+    const selectedMode = this.modes[mode];
 
-        this.numberToGuess = generator.generateNumber(...selectedMode);
-    }
+    if (!selectedMode) throw new Error(`Mode "${mode}" doesn't exists.`);
 
-    getFormattedMode() {
-        const [min, max] = this.modes[this.currentMode]; //destructure
+    this.numberToGuess = generator.generateNumber(...selectedMode);
+  }
 
-        return `${this.currentMode} <b>[${min}, ${max}]</b>`;
-    }
+  getFormattedMode() {
+    const [min, max] = this.modes[this.currentMode]; //destructure
 
-    isEqualTo(value) {
-        return value === this.numberToGuess;
-    }
+    return `${this.currentMode} <b>[${min}, ${max}]</b>`;
+  }
 
-    isGreaterThan(value) {
-        return this.numberToGuess > value;
-    }
+  isEqualTo(value) {
+    return value === this.numberToGuess;
+  }
 
-    isLessThan(value) {
-        return this.numberToGuess < value;
-    }
+  isGreaterThan(value) {
+    return this.numberToGuess > value;
+  }
 
-    reset() {
-        this.setMode(this.currentMode);
-    }
+  isLessThan(value) {
+    return this.numberToGuess < value;
+  }
 
-    startTimer() {
-        this.startedAt = Date.now();
-    }
+  reset() {
+    this.setMode(this.currentMode);
+  }
 
-    stopTimer() {
-        this.stoppedAt = Date.now();
-    }
+  startTimer() {
+    this.startedAt = Date.now();
+    this.timerId = setInterval(() => {
+      const elapsedTimeMs = Date.now() - this.startedAt;
+      const elapsedTimeSec = elapsedTimeMs / 1000;
+      this.onTick(elapsedTimeSec.toFixed(2));
+    }, 128);
+  }
 
-    getPlayerTime() {
-        return this.stoppedAt - this.startedAt;
-    }
+  stopTimer() {
+    this.stoppedAt = Date.now();
+    clearInterval(this.timerId);
+  }
+
+  getPlayerTime() {
+    return this.stoppedAt - this.startedAt;
+  }
 }

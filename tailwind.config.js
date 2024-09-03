@@ -564,7 +564,7 @@ export default {
       50: '50',
     },
     screens: {
-      xs: '375px',
+      xs: '360px',
       ...defaultTheme.screens,
     },
   },
