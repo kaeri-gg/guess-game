@@ -78,3 +78,21 @@ input[type='number']::-webkit-inner-spin-button {
 ::selection {
   background-color: transparent;
 }
+
+input[type='range'] {
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  @apply h-5 w-5 rounded-full bg-cyan-500 shadow-md transition-transform duration-300 ease-in-out;
+}
+
+input[type='range']::-moz-range-thumb {
+  @apply h-5 w-5 rounded-full bg-cyan-500 shadow-md transition-transform duration-300 ease-in-out;
+}
+
+input[type='range']::-ms-thumb {
+  @apply h-5 w-5 rounded-full bg-cyan-500 shadow-md transition-transform duration-300 ease-in-out;
+}
