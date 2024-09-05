@@ -16,6 +16,7 @@ export class Session {
     this.startAgainBtn = $('#startAgainBtn');
     this.modes = $('input[name="mode"]');
     this.elapsedTime = $('#elapsedTime');
+    this.onScreenKeyboardDiv = $('#onScreenKeyboardDiv');
 
     this.playerInputDiv = $('#playerInputDiv');
     this.playerNameInput = $('#playerNameInput');
@@ -61,6 +62,7 @@ export class Session {
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
 
     //this.showStartGamePage();
+    //this.showCountDownPage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
@@ -83,18 +85,26 @@ export class Session {
       this.hintDiv.fadeOut('fast');
       this.playerInput.val('');
     };
+
     this.keyboard.onBackspace = () => {
       const val = parseInt(this.playerInput.val());
       const div = Math.floor(val / 10);
       this.playerInput.val(div || '');
       this.hintDiv.fadeOut('fast');
     };
+
     this.keyboard.onNumber = (value) => {
+      // clear input when user clicks on keyboard again
+      if (this.playerSubmitBtn.attr('data-clicked') === 'true') {
+        this.playerInput.val('');
+        this.playerSubmitBtn.attr('data-clicked', 'false');
+      }
       const val = parseInt(this.playerInput.val() || 0);
       const target = val * 10 + value;
       this.playerInput.val(target);
       this.hintDiv.fadeOut('fast');
     };
+
     this.startBtn.on('click', () => {
       this.selectedMode = $('input[name="mode"]:checked').val();
 
@@ -202,6 +212,7 @@ export class Session {
     this.youWonDiv.hide();
     this.newGameButtonsDiv.hide();
     this.playerSubmitDiv.show('slow');
+    this.onScreenKeyboardDiv.show();
   }
 
   tryAgain() {
@@ -224,28 +235,25 @@ export class Session {
   }
 
   markWrongInput() {
-    this.playerInput.focus();
-    //this.playerInput.select();
+    this.hintSound.play();
+    this.hintDiv.fadeIn();
     this.playerInputDiv.effect('shake');
   }
 
   guess() {
     const inputValue = parseInt(this.playerInput.val());
     this.hintDiv.hide();
+    this.playerSubmitBtn.attr('data-clicked', 'true');
 
     if (this.game.isGreaterThan(inputValue)) {
-      this.hintSound.play();
       this.hintIcon.removeClass('fa-arrow-up text-green-500').addClass('fa-arrow-down text-red-500');
       this.hintText.html(`Your number <b>(${inputValue})</b> is <b>lower</b> than target!`);
-      this.hintDiv.fadeIn();
       this.markWrongInput();
     }
 
     if (this.game.isLessThan(inputValue)) {
-      this.hintSound.play();
       this.hintIcon.removeClass('fa-arrow-down text-red-500').addClass('fa-arrow-up text-green-500');
       this.hintText.html(`Your number <b>(${inputValue})</b> is <b>higher</b> than target`);
-      this.hintDiv.fadeIn();
       this.markWrongInput();
     }
 
@@ -255,6 +263,7 @@ export class Session {
       this.playerInput.attr('disabled', '');
       this.hintDiv.hide();
       this.playerSubmitDiv.hide();
+      this.onScreenKeyboardDiv.hide();
 
       this.newGameButtonsDiv.fadeIn();
 
@@ -280,5 +289,5 @@ export class Session {
   }
 }
 
-// Instantiate and start the GameApp
+// Instantiate and start the session
 const gameApp = new Session();
