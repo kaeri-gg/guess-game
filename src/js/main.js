@@ -16,6 +16,7 @@ export class Session {
     this.startAgainBtn = $('#startAgainBtn');
     this.modes = $('input[name="mode"]');
     this.elapsedTime = $('#elapsedTime');
+    this.onScreenKeyboardDiv = $('#onScreenKeyboardDiv');
 
     this.playerInputDiv = $('#playerInputDiv');
     this.playerNameInput = $('#playerNameInput');
@@ -210,6 +211,7 @@ export class Session {
     this.youWonDiv.hide();
     this.newGameButtonsDiv.hide();
     this.playerSubmitDiv.show('slow');
+    this.onScreenKeyboardDiv.show();
   }
 
   tryAgain() {
@@ -260,6 +262,7 @@ export class Session {
       this.playerInput.attr('disabled', '');
       this.hintDiv.hide();
       this.playerSubmitDiv.hide();
+      this.onScreenKeyboardDiv.hide();
 
       this.newGameButtonsDiv.fadeIn();
 
