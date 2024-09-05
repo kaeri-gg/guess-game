@@ -59,7 +59,7 @@
                 <!-- Close button -->
                 <button
                   type="button"
-                  class="close absolute right-5 top-5 text-base text-gray-400 hover:text-gray-500 focus:outline-none"
+                  class="close xs: absolute top-5 text-base text-gray-400 hover:text-gray-500 focus:outline-none xs:right-5 sm:right-7 sm:top-7"
                   aria-label="Close"
                 >
                   <i class="fas fa-times"></i>
@@ -69,9 +69,9 @@
 
                 <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div class="sm:flex sm:items-start">
-                    <div class="mt-3 sm:ml-4 sm:mt-0 sm:text-left">
+                    <div class="mt-3 w-full sm:ml-4 sm:mt-0 sm:text-left">
                       <h3
-                        class="font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
+                        class="mt-7 font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
                         id="modal-title"
                       >
                         Game Settings
@@ -79,7 +79,7 @@
                       <div class="mt-2">
                         <p class="text-sm text-gray-500">Adjust the sounds according to your like:</p>
                       </div>
-                      <div class="m-7 mb-0">
+                      <div class="m-7">
                         <div class="my-5">
                           <div class="flex flex-col items-start space-y-2">
                             <label for="range-background" class="mb-2 text-sm font-medium text-gray-700"
@@ -92,7 +92,7 @@
                               min="1"
                               max="100"
                               step="1"
-                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-default-gray300"
                             />
                             <datalist id="datalist">
                               <option value="1">|</option>
@@ -121,7 +121,7 @@
                               min="1"
                               max="100"
                               step="1"
-                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-default-gray300"
                             />
                           </div>
                         </div>
@@ -133,10 +133,7 @@
 
                             <!-- default -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="default"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="default">
                                 <input
                                   checked
                                   name="sound"
@@ -157,17 +154,14 @@
                                   </svg>
                                 </span>
                               </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="html">
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="html">
                                 Default
                               </label>
                             </div>
 
                             <!-- track 1 -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="track1"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track1">
                                 <input
                                   name="sound"
                                   type="radio"
@@ -187,17 +181,14 @@
                                   </svg>
                                 </span>
                               </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track1">
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track1">
                                 Track 1
                               </label>
                             </div>
 
                             <!-- track 2 -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="track2"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track2">
                                 <input
                                   name="sound"
                                   type="radio"
@@ -217,17 +208,14 @@
                                   </svg>
                                 </span>
                               </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track2">
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track2">
                                 Track 2
                               </label>
                             </div>
 
                             <!-- track 3 -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="track3"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track3">
                                 <input
                                   name="sound"
                                   type="radio"
@@ -247,17 +235,14 @@
                                   </svg>
                                 </span>
                               </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track3">
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track3">
                                 Track 3
                               </label>
                             </div>
 
                             <!-- track 4 -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="track4"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track4">
                                 <input
                                   name="sound"
                                   type="radio"
@@ -277,17 +262,14 @@
                                   </svg>
                                 </span>
                               </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track4">
+                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track4">
                                 Track 4
                               </label>
                             </div>
 
                             <!-- track 5 -->
                             <div class="inline-flex items-center">
-                              <label
-                                class="relative flex cursor-pointer items-center rounded-full p-2"
-                                htmlFor="track5"
-                              >
+                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track5">
                                 <input
                                   name="sound
                                   "
@@ -323,13 +305,13 @@
                 <div class="flex flex-row justify-between bg-gray-50 px-4 py-3 xs:flex-col sm:flex-row sm:px-6">
                   <button
                     type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                    class="mt-3 inline-flex w-full justify-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0"
                   >
                     Reset Default
                   </button>
                   <button
                     type="button"
-                    class="mt-3 inline-flex w-full justify-center rounded-md bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:mt-0 sm:w-auto"
+                    class="mt-3 inline-flex w-full justify-center rounded-full bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:mt-0"
                   >
                     Save
                   </button>
@@ -493,6 +475,7 @@
           <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
             <button
               id="playerSubmitBtn"
+              data-clicked="false"
               class="h-12 w-56 animate-bounce rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md xs:h-10 xs:w-48 xs:text-base md:h-16 md:w-80"
             >
               SUBMIT
