@@ -13,33 +13,32 @@
     <title>Guess Game</title>
   </head>
 
-  <body class="h-screen w-screen overflow-hidden bg-default-gray100" ontouchstart="">
+  <body class="min-h-screen w-screen overflow-hidden overflow-y-auto bg-default-gray100" ontouchstart="">
     <div class="flex flex-col items-center justify-between">
       <!-------------------- welcome page --------------------->
       <div
         id="welcomeMainDiv"
-        class="flex h-screen w-full flex-col items-center justify-center space-y-4 text-base xs:text-sm"
+        class="flex min-h-screen min-w-64 max-w-lg flex-col items-center justify-center space-y-4 text-base xs:text-sm"
       >
         <!-------------------- controls --------------------->
-        <div class="controls absolute right-0 h-screen">
+        <div class="controls absolute xs:right-1 xs:top-1 sm:right-3 sm:top-3">
           <div class="m-3 flex flex-row items-center justify-end space-x-4">
             <button
               type="button"
-              class="settings-control h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+              class="settings-control max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
             >
-              <i class="fa-solid fa-gear"></i>
+              <i class="fa-solid fa-gear min-text-xs"></i>
             </button>
             <button
               type="button"
-              class="sound-toggle h-14 w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+              class="sound-toggle max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
             >
-              <i class="fa-solid fa-volume-low"></i>
+              <i class="fa-solid fa-volume-low min-text-xs"></i>
             </button>
           </div>
         </div>
 
         <!-------------------- settings --------------------->
-
         <div
           style="display: none"
           class="modal relative z-10"
@@ -321,10 +320,12 @@
           </div>
         </div>
 
-        <img src="/guess-game-logo.svg" class="mt-5 xs:h-32 sm:h-40 md:h-72" />
-        <div class="flex w-full flex-col items-center justify-center space-y-6 px-7 xs:space-y-4">
+        <div class="w-64">
+          <img src="/guess-game-logo.svg" class="w-full min-w-64" />
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-6 px-7 xs:space-y-4">
           <!-----------game mechanics ---------->
-          <div class="justify-center self-center text-center md:my-6 md:w-2/5 lg:my-8 2xl:w-1/4">
+          <div class="justify-center self-center text-center md:my-6 lg:my-8">
             <p>
               🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
               would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
@@ -332,21 +333,18 @@
           </div>
 
           <!-----------name input ---------->
-          <div class="">
+          <div class="flex w-full flex-row items-center justify-center space-x-2 pb-8 xs:text-sm md:text-base">
             <input
               type="text"
               id="playerNameInput"
               autocomplete="none"
               autofocus="on"
-              class="border-r-1 border-l-1 h-12 w-80 rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
+              class="border-r-1 border-l-1 h-12 w-full rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
               placeholder="Your name..."
             />
           </div>
 
-          <div
-            id="modeDiv"
-            class="flex w-full flex-row items-center justify-center space-x-2 pb-8 xs:text-sm md:w-2/4 md:text-base 2xl:w-1/4"
-          >
+          <div id="modeDiv" class="flex w-full flex-row items-center justify-center space-x-2 pb-8">
             <!-----------mode: easy ---------->
             <div class="flex w-full flex-col items-center">
               <div class="flex flex-col xs:mb-3 md:mb-4">
@@ -407,7 +405,7 @@
               </label>
             </div>
           </div>
-          <div class="w-full md:w-2/4 2xl:w-1/4">
+          <div class="w-full">
             <button
               id="startBtn"
               class="h-16 w-full animate-bounce rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md xs:h-14 xs:text-sm md:text-base"
@@ -422,13 +420,13 @@
       <div
         id="countdownMainDiv"
         style="display: none"
-        class="flex h-screen w-full flex-col items-center justify-center bg-default-orange"
+        class="flex min-h-screen w-full flex-col items-center justify-center bg-default-orange"
       >
-        <p id="counterText" class="animate-pump font-display text-[15rem] font-bold text-default-peach"></p>
+        <p id="counterText" class="animate-pump font-display text-[15rem] font-bold text-default-peach">3</p>
       </div>
 
       <!-------------------- game starts page --------------------->
-      <div id="startGameMainDiv" style="display: none" class="flex h-screen w-full flex-col justify-between">
+      <div id="startGameMainDiv" style="display: none" class="flex min-h-screen w-full flex-col justify-between">
         <!-------------------- details --------------------->
 
         <div class="flex w-full flex-row items-center justify-between p-4 xs:p-4 xs:text-sm md:p-8">

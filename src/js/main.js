@@ -62,6 +62,7 @@ export class Session {
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
 
     //this.showStartGamePage();
+    //this.showCountDownPage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
