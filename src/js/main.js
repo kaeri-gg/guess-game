@@ -2,6 +2,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Game } from './game';
 import { Countdown } from '../services/countdown';
 import { Keyboard } from './onscreen-keyboard';
+import { Sound } from './sound';
 
 export class Session {
   constructor() {
@@ -17,6 +18,8 @@ export class Session {
     this.modes = $('input[name="mode"]');
     this.elapsedTime = $('#elapsedTime');
     this.onScreenKeyboardDiv = $('#onScreenKeyboardDiv');
+
+    this.soundTrack = $('input[name="sound"]');
 
     this.playerInputDiv = $('#playerInputDiv');
     this.playerNameInput = $('#playerNameInput');
@@ -54,12 +57,16 @@ export class Session {
     this.hintSound = $('#hintSound')[0];
     this.winSound = $('#winSound')[0];
     this.errorSound = $('#errorSound')[0];
+    this.backgroundSound = $('#backgroundSound');
+    this.saveSound = $('#saveSound');
+    this.resetSound = $('#resetSound');
 
     this.newBestSound = $('#newBestSound')[0];
 
     this.game = new Game();
     this.countdownTimer = new Countdown(3);
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
+    this.sound = new Sound();
 
     //this.showStartGamePage();
     //this.showCountDownPage();
@@ -69,18 +76,16 @@ export class Session {
   }
 
   subscribeEventListeners() {
-    this.game.onTick = (elapsedTime) => {
-      this.elapsedTime.text(`${elapsedTime} sec`);
-    };
+    // getting selected background music:
+    this.soundTrack.on('click', () => {
+      this.selectedSound = $('input[name="sound"]:checked').val();
+      this.sound.setSound(this.selectedSound);
 
-    this.settingsControl.on('click', () => {
-      this.modal.show('ease-out duration-300');
+      //set html source
+      this.backgroundSound.attr('src', this.sound.setSource());
     });
 
-    this.closeModal.on('click', () => {
-      this.modal.hide('ease-in duration-200');
-    });
-
+    // on-screen keyboard listeners
     this.keyboard.onClear = () => {
       this.hintDiv.fadeOut('fast');
       this.playerInput.val('');
@@ -104,6 +109,18 @@ export class Session {
       this.playerInput.val(target);
       this.hintDiv.fadeOut('fast');
     };
+
+    this.game.onTick = (elapsedTime) => {
+      this.elapsedTime.text(`${elapsedTime} sec`);
+    };
+
+    this.settingsControl.on('click', () => {
+      this.modal.show('ease-out duration-300');
+    });
+
+    this.closeModal.on('click', () => {
+      this.modal.hide('ease-in duration-200');
+    });
 
     this.startBtn.on('click', () => {
       this.selectedMode = $('input[name="mode"]:checked').val();
