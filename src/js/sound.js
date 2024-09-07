@@ -17,11 +17,10 @@ export class Sound {
 
   // return the source based on selected sounds
   setSource() {
-    const source = this.sounds[this.currentSound];
-    return source;
+    return this.sounds[this.currentSound];
   }
 
   reset() {
-    this.sounds.Default;
+    return console.log(this.sounds.Default);
   }
 }

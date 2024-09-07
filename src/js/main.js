@@ -3,6 +3,7 @@ import { Game } from './game';
 import { Countdown } from '../services/countdown';
 import { Keyboard } from './onscreen-keyboard';
 import { Sound } from './sound';
+import { SoundEffect, BackgroundMusic } from './audio-player';
 
 export class Session {
   constructor() {
@@ -67,12 +68,15 @@ export class Session {
     this.countdownTimer = new Countdown(3);
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
     this.sound = new Sound();
+    this.backgroundMusic = new BackgroundMusic();
+    this.soundEffect = new SoundEffect();
 
     //this.showStartGamePage();
     //this.showCountDownPage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
+    this.registerAudios();
   }
 
   subscribeEventListeners() {
@@ -85,6 +89,10 @@ export class Session {
       this.backgroundSound.attr('src', this.sound.setSource());
     });
 
+    this.resetSound.on('click', () => {
+      this.backgroundSound.attr('src', this.sound.reset());
+      //$('input[name="sound"]:checked').val();
+    });
     // on-screen keyboard listeners
     this.keyboard.onClear = () => {
       this.hintDiv.fadeOut('fast');
@@ -123,20 +131,23 @@ export class Session {
     });
 
     this.startBtn.on('click', () => {
+      // this.soundEffect.playError();
+      // this.backgroundMusic.playTrack01();
+
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
-        this.errorSound.play();
+        // this.errorSound.play();
         this.playerNameInput.effect('shake');
         return;
       }
       if (!this.selectedMode) {
-        this.errorSound.play();
+        //  this.errorSound.play();
         this.modeDiv.effect('shake');
         return;
       }
 
-      this.enterGameSound.play();
+      // this.enterGameSound.play();
       this.game.setMode(this.selectedMode);
       this.countdownTimer.start();
     });
@@ -303,6 +314,40 @@ export class Session {
       this.elapsedTime.text(formattedTime);
       this.youWonScore.text(`Time: ${formattedTime}`);
     }
+  }
+
+  registerAudios() {
+    this.backgroundMusic.audios.forEach((audio) => {
+      $('#background-audios').append(`
+        <div class="inline-flex items-center">
+         <label class="relative flex cursor-pointer items-center rounded-full p-2" for="${audio.key}">
+           <input
+             name="sound"
+             type="radio"
+             class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+             id="${audio.key}"
+             value="${audio.key}"
+           />
+ 
+           <span
+             class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+           >
+             <svg
+               xmlns="http://www.w3.org/2000/svg"
+               class="h-3.5 w-3.5"
+               viewBox="0 0 16 16"
+               fill="currentColor"
+             >
+               <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+             </svg>
+           </span>
+         </label>
+         <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="${audio.key}">
+           ${audio.name}
+         </label>
+       </div>
+      `);
+    });
   }
 }
 
