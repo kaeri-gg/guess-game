@@ -18,7 +18,6 @@ export class AudioPlayer {
     this.current = null;
 
     this.audios = this.audios.map((audio) => {
-      // @example {string} Audio - example: audio = new Audio('http://localhost:4096/music/bgm/default.mp3');
       audio.player = new Audio(audio.src);
       audio.player.value = this.volume;
 

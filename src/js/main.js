@@ -21,9 +21,6 @@ export class Session {
     this.elapsedTime = $('#elapsedTime');
     this.onScreenKeyboardDiv = $('#onScreenKeyboardDiv');
 
-    this.selectBackgroundAudios = $('#background-audios');
-    this.soundTrack = $('input[name="sound"]');
-
     this.playerInputDiv = $('#playerInputDiv');
     this.playerNameInput = $('#playerNameInput');
     this.playerNameText = $('#playerNameText');
@@ -52,11 +49,9 @@ export class Session {
     this.volumnToggle = $('.volume-toggle');
     this.volumnIcon = $('.volume-toggle-icon');
     this.modal = $('.modal');
-    this.modalOverlay = $('.modal-overlay');
-    this.modalContainer = $('.modal-container');
     this.closeModal = $('.modal-container>.close');
 
-    this.backgroundSound = $('#backgroundSound');
+    this.selectBackgroundAudios = $('#background-audios');
     this.saveSound = $('#saveSound');
     this.resetSound = $('#resetSound');
 
@@ -67,13 +62,15 @@ export class Session {
     this.backgroundMusic = new BackgroundMusic();
     this.soundEffect = new SoundEffect();
 
-    //this.showStartGamePage();
-    //this.showCountDownPage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
     this.registerAudios();
-    this.backgroundMusic.playDefault();
+
+    $(window).on('load', () => {
+      this.backgroundMusic.playDefault();
+      $('#Default').prop('checked', true);
+    });
   }
 
   subscribeEventListeners() {
