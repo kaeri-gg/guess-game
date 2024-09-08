@@ -21,6 +21,7 @@ export class Session {
     this.elapsedTime = $('#elapsedTime');
     this.onScreenKeyboardDiv = $('#onScreenKeyboardDiv');
 
+    this.selectBackgroundAudios = $('#background-audios');
     this.soundTrack = $('input[name="sound"]');
 
     this.playerInputDiv = $('#playerInputDiv');
@@ -48,7 +49,8 @@ export class Session {
     this.hardModeOption = $('#hardMode');
 
     this.settingsControl = $('.settings-control');
-    this.soundToggle = $('.sound-toggle');
+    this.volumnToggle = $('.volume-toggle');
+    this.volumnIcon = $('.volume-toggle-icon');
     this.modal = $('.modal');
     this.modalOverlay = $('.modal-overlay');
     this.modalContainer = $('.modal-container');
@@ -71,30 +73,53 @@ export class Session {
     this.subscribeEventListeners();
     this.resetEverything();
     this.registerAudios();
-    //this.backgroundMusic.playDefault();
+    this.backgroundMusic.playDefault();
   }
 
   subscribeEventListeners() {
-    // getting selected background music:
-    this.soundTrack.on('click', () => {
+    // managing sound
+    this.settingsControl.on('click', () => {
       this.soundEffect.playClick();
-      this.selectedSound = $('input[name="sound"]:checked').val();
-      this.sound.setSound(this.selectedSound);
+      this.modal.show('ease-out duration-300');
+    });
 
-      //set html source
-      this.backgroundSound.attr('src', this.sound.setSource());
+    this.closeModal.on('click', () => {
+      this.soundEffect.playClick();
+      this.modal.hide('ease-in duration-200');
+    });
+
+    this.saveSound.on('click', () => {
+      this.soundEffect.playClick();
+      this.modal.hide('ease-in duration-200');
+    });
+
+    this.volumnToggle.on('click', () => {
+      this.soundEffect.playClick();
+
+      if (!this.volumnToggle.hasClass('active')) {
+        this.volumnToggle.addClass('active');
+        this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
+        this.backgroundMusic.playDefault();
+      } else {
+        this.volumnToggle.removeClass('active');
+        this.volumnIcon.removeClass('fa-volume-low').addClass('fa-volume-xmark');
+        this.backgroundMusic.stopAll();
+      }
+    });
+
+    // selecting background music:
+    this.selectBackgroundAudios.on('change', 'input[name="sound"]', () => {
+      this.soundEffect.playClick();
+
+      const selectedAudioKey = $('input[name="sound"]:checked').val();
+
+      this.backgroundMusic.stopAll();
+      this.backgroundMusic.play(selectedAudioKey);
     });
 
     this.resetSound.on('click', () => {
       this.soundEffect.playClick();
-
-      this.backgroundSound.attr('src', this.sound.reset());
-      //$('input[name="sound"]:checked').val();
-    });
-
-    this.soundToggle.on('click', () => {
-      this.soundEffect.playClick();
-      this.backgroundMusic.stopAll();
+      this.backgroundMusic.playDefault;
     });
 
     // on-screen keyboard listeners
@@ -125,16 +150,6 @@ export class Session {
     this.game.onTick = (elapsedTime) => {
       this.elapsedTime.text(`${elapsedTime} sec`);
     };
-
-    this.settingsControl.on('click', () => {
-      this.soundEffect.playClick();
-      this.modal.show('ease-out duration-300');
-    });
-
-    this.closeModal.on('click', () => {
-      this.soundEffect.playClick();
-      this.modal.hide('ease-in duration-200');
-    });
 
     this.startBtn.on('click', () => {
       this.selectedMode = $('input[name="mode"]:checked').val();
@@ -321,7 +336,7 @@ export class Session {
 
   registerAudios() {
     this.backgroundMusic.audios.forEach((audio) => {
-      $('#background-audios').append(`
+      this.selectBackgroundAudios.append(`
         <div class="inline-flex items-center">
          <label class="relative flex cursor-pointer items-center rounded-full p-2" for="${audio.key}">
            <input
