@@ -3,7 +3,8 @@ import { Game } from './game';
 import { Countdown } from '../services/countdown';
 import { Keyboard } from './onscreen-keyboard';
 import { Sound } from './sound';
-import { SoundEffect, BackgroundMusic } from './audio-player';
+import { SoundEffect } from './audio-sound-effect';
+import { BackgroundMusic } from './audio-background-music';
 
 export class Session {
   constructor() {
@@ -53,16 +54,9 @@ export class Session {
     this.modalContainer = $('.modal-container');
     this.closeModal = $('.modal-container>.close');
 
-    this.enterGameSound = $('#enterGameSound')[0];
-    this.newGameSound = $('#newGameSound')[0];
-    this.hintSound = $('#hintSound')[0];
-    this.winSound = $('#winSound')[0];
-    this.errorSound = $('#errorSound')[0];
     this.backgroundSound = $('#backgroundSound');
     this.saveSound = $('#saveSound');
     this.resetSound = $('#resetSound');
-
-    this.newBestSound = $('#newBestSound')[0];
 
     this.game = new Game();
     this.countdownTimer = new Countdown(3);
@@ -77,11 +71,13 @@ export class Session {
     this.subscribeEventListeners();
     this.resetEverything();
     this.registerAudios();
+    //this.backgroundMusic.playDefault();
   }
 
   subscribeEventListeners() {
     // getting selected background music:
     this.soundTrack.on('click', () => {
+      this.soundEffect.playClick();
       this.selectedSound = $('input[name="sound"]:checked').val();
       this.sound.setSound(this.selectedSound);
 
@@ -90,9 +86,17 @@ export class Session {
     });
 
     this.resetSound.on('click', () => {
+      this.soundEffect.playClick();
+
       this.backgroundSound.attr('src', this.sound.reset());
       //$('input[name="sound"]:checked').val();
     });
+
+    this.soundToggle.on('click', () => {
+      this.soundEffect.playClick();
+      this.backgroundMusic.stopAll();
+    });
+
     // on-screen keyboard listeners
     this.keyboard.onClear = () => {
       this.hintDiv.fadeOut('fast');
@@ -123,31 +127,30 @@ export class Session {
     };
 
     this.settingsControl.on('click', () => {
+      this.soundEffect.playClick();
       this.modal.show('ease-out duration-300');
     });
 
     this.closeModal.on('click', () => {
+      this.soundEffect.playClick();
       this.modal.hide('ease-in duration-200');
     });
 
     this.startBtn.on('click', () => {
-      // this.soundEffect.playError();
-      // this.backgroundMusic.playTrack01();
-
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
-        // this.errorSound.play();
+        this.soundEffect.playError();
         this.playerNameInput.effect('shake');
         return;
       }
       if (!this.selectedMode) {
-        //  this.errorSound.play();
+        this.soundEffect.playError();
         this.modeDiv.effect('shake');
         return;
       }
 
-      // this.enterGameSound.play();
+      this.soundEffect.playEnterGame();
       this.game.setMode(this.selectedMode);
       this.countdownTimer.start();
     });
@@ -163,12 +166,12 @@ export class Session {
     });
 
     this.startNewBtn.on('click', () => {
-      this.newGameSound.play();
+      this.soundEffect.playEnterGame();
       this.showWelcomePage();
     });
 
     this.startAgainBtn.on('click', () => {
-      this.newGameSound.play();
+      this.soundEffect.playEnterGame();
       this.tryAgain();
     });
 
@@ -181,7 +184,7 @@ export class Session {
       });
 
     this.modes.on('click', () => {
-      this.hintSound.play();
+      this.soundEffect.playClick();
     });
 
     this.countdownTimer.onStart = () => {
@@ -263,7 +266,7 @@ export class Session {
   }
 
   markWrongInput() {
-    this.hintSound.play();
+    this.soundEffect.playClick();
     this.hintDiv.fadeIn();
     this.playerInputDiv.effect('shake');
   }
@@ -286,7 +289,7 @@ export class Session {
     }
 
     if (this.game.isEqualTo(inputValue)) {
-      this.winSound.play();
+      this.soundEffect.playWin();
       this.youWonDiv.show();
       this.playerInput.attr('disabled', '');
       this.hintDiv.hide();

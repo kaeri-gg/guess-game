@@ -18,6 +18,7 @@ export class AudioPlayer {
     this.current = null;
 
     this.audios = this.audios.map((audio) => {
+      // @example {string} Audio - example: audio = new Audio('http://localhost:4096/music/bgm/default.mp3');
       audio.player = new Audio(audio.src);
       audio.player.value = this.volume;
 
@@ -27,7 +28,6 @@ export class AudioPlayer {
 
   play(key) {
     const { player } = this.getAudioBy(key);
-
     player.play();
   }
 
@@ -43,74 +43,5 @@ export class AudioPlayer {
     if (!audioFound) throw new Error(`Audio by key: ${key} not found!`);
 
     return audioFound;
-  }
-}
-
-export class SoundEffect extends AudioPlayer {
-  constructor() {
-    super(100, [
-      { key: 'EnterGame', src: 'music/effects/enter-game.mp3' },
-      { key: 'NewGame', src: 'music/effects/new-game.mp3' },
-      { key: 'Hint', src: 'music/effects/hint.mp3' },
-      { key: 'Win', src: 'music/effects/win.mp3' },
-      { key: 'NewBest', src: 'music/effects/new-best.mp3' },
-      { key: 'Error', src: 'music/effects/error.mp3' },
-    ]);
-  }
-
-  playEnterGame() {
-    this.play('EnterGame');
-  }
-
-  playError() {
-    this.play('Error');
-  }
-}
-
-export class BackgroundMusic extends AudioPlayer {
-  constructor() {
-    super(100, [
-      {
-        name: 'Default (My favorite)',
-        key: 'Default',
-        src: 'music/bgm/default.mp3',
-      },
-      {
-        name: 'Cutesy Fantasy',
-        key: 'Track01',
-        src: 'music/bgm/tr1-cutesy-fantasy.mp3',
-      },
-      {
-        name: 'Fire up the zone',
-        key: 'Track02',
-        src: 'music/bgm/tr2-fire-up-the-zone.mp3',
-      },
-      {
-        name: "Let's play arcade",
-        key: 'Track03',
-        src: 'music/bgm/tr3-lets-play-arcade.mp3',
-      },
-      {
-        name: 'No rush, just chill',
-        key: 'Track04',
-        src: 'music/bgm/tr4-no-rush-just-chill.mp3',
-      },
-      {
-        name: 'Yes, like when you are a kid',
-        key: 'Track05',
-        src: 'music/bgm/tr5-yes-like-when-you-were-a-kid.mp3',
-      },
-    ]);
-  }
-
-  playTrack01() {
-    this.stop('Track01');
-    this.play('Track01');
-  }
-
-  stopAll() {
-    this.audios.forEach((audio) => {
-      this.stop(audio.key);
-    });
   }
 }
