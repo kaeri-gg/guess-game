@@ -31,9 +31,9 @@
             </button>
             <button
               type="button"
-              class="sound-toggle max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+              class="volume-toggle active max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
             >
-              <i class="fa-solid fa-volume-low min-text-xs"></i>
+              <i class="volume-toggle-icon fa-solid min-text-xs fa-volume-low"></i>
             </button>
           </div>
         </div>
@@ -70,7 +70,7 @@
                   <div class="sm:flex sm:items-start">
                     <div class="mt-3 w-full sm:ml-4 sm:mt-0 sm:text-left">
                       <h3
-                        class="mt-7 font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
+                        class="mt-4 font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
                         id="modal-title"
                       >
                         Game Settings
@@ -78,7 +78,7 @@
                       <div class="mt-2">
                         <p class="text-sm text-gray-500">Adjust the sounds according to your like:</p>
                       </div>
-                      <div class="m-7">
+                      <div class="m-7 mb-0">
                         <div class="my-5">
                           <div class="flex flex-col items-start space-y-2">
                             <label for="range-background" class="mb-2 text-sm font-medium text-gray-700"
@@ -110,9 +110,9 @@
                         </div>
                         <div class="my-5">
                           <div class="flex flex-col items-start space-y-2">
-                            <label for="range-effects" class="mb-2 text-sm font-medium text-gray-700"
-                              >Sound effects:</label
-                            >
+                            <label for="range-effects" class="mb-2 text-sm font-medium text-gray-700">
+                              Sound effects:
+                            </label>
                             <input
                               id="range-effects"
                               list="datalist"
@@ -125,174 +125,10 @@
                           </div>
                         </div>
                         <div class="mt-7">
-                          <div class="flex flex-col">
+                          <div id="background-audios" class="flex flex-col">
                             <label for="range-effects" class="mb-2 text-sm font-medium text-gray-700"
                               >Choose background song:</label
                             >
-
-                            <!-- default -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="default">
-                                <input
-                                  checked
-                                  name="sound"
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="default"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="html">
-                                Default
-                              </label>
-                            </div>
-
-                            <!-- track 1 -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track1">
-                                <input
-                                  name="sound"
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="track1"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track1">
-                                Track 1
-                              </label>
-                            </div>
-
-                            <!-- track 2 -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track2">
-                                <input
-                                  name="sound"
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="track2"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track2">
-                                Track 2
-                              </label>
-                            </div>
-
-                            <!-- track 3 -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track3">
-                                <input
-                                  name="sound"
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="track3"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track3">
-                                Track 3
-                              </label>
-                            </div>
-
-                            <!-- track 4 -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track4">
-                                <input
-                                  name="sound"
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="track4"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="track4">
-                                Track 4
-                              </label>
-                            </div>
-
-                            <!-- track 5 -->
-                            <div class="inline-flex items-center">
-                              <label class="relative flex cursor-pointer items-center rounded-full p-2" for="track5">
-                                <input
-                                  name="sound
-                                  "
-                                  type="radio"
-                                  class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
-                                  id="track5"
-                                />
-                                <span
-                                  class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-3.5 w-3.5"
-                                    viewBox="0 0 16 16"
-                                    fill="currentColor"
-                                  >
-                                    <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                  </svg>
-                                </span>
-                              </label>
-                              <label class="mt-px cursor-pointer select-none text-sm text-gray-500" htmlFor="track5">
-                                Track 5
-                              </label>
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -301,18 +137,20 @@
                 </div>
 
                 <!-- Save and Restore Button -->
-                <div class="flex flex-row justify-between bg-gray-50 px-4 py-3 xs:flex-col sm:flex-row sm:px-6">
+                <div class="flex flex-row justify-between bg-gray-50 p-4 xs:flex-col sm:flex-row sm:px-6">
                   <button
                     type="button"
+                    id="resetSound"
                     class="mt-3 inline-flex w-full justify-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0"
                   >
                     Reset Default
                   </button>
                   <button
                     type="button"
+                    id="saveSound"
                     class="mt-3 inline-flex w-full justify-center rounded-full bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:mt-0"
                   >
-                    Save
+                    Sounds cool!
                   </button>
                 </div>
               </div>
@@ -635,15 +473,5 @@
     <div class="flex bg-transparent" style="display: none">
       <span class="flex h-12 items-center">Footer details here.</span>
     </div>
-    <audio id="background-music" autoplay loop>
-      <source src="music/bgm2.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="enterGameSound" src="music/enter-game.mp3" preload="auto"></audio>
-    <audio id="newGameSound" src="music/new-game.mp3" preload="auto"></audio>
-    <audio id="hintSound" src="music/hint.mp3" preload="auto"></audio>
-    <audio id="winSound" src="music/win.mp3" preload="auto"></audio>
-    <audio id="newBestSound" src="music/new-best.mp3" preload="auto"></audio>
-    <audio id="errorSound" src="music/error.mp3" preload="auto"></audio>
   </body>
 </html>

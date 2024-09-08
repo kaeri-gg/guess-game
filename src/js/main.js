@@ -2,6 +2,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Game } from './game';
 import { Countdown } from '../services/countdown';
 import { Keyboard } from './onscreen-keyboard';
+import { Sound } from './sound';
+import { SoundEffect } from './audio-sound-effect';
+import { BackgroundMusic } from './audio-background-music';
 
 export class Session {
   constructor() {
@@ -43,44 +46,80 @@ export class Session {
     this.hardModeOption = $('#hardMode');
 
     this.settingsControl = $('.settings-control');
-    this.soundToggle = $('.sound-toggle');
+    this.volumnToggle = $('.volume-toggle');
+    this.volumnIcon = $('.volume-toggle-icon');
     this.modal = $('.modal');
-    this.modalOverlay = $('.modal-overlay');
-    this.modalContainer = $('.modal-container');
     this.closeModal = $('.modal-container>.close');
 
-    this.enterGameSound = $('#enterGameSound')[0];
-    this.newGameSound = $('#newGameSound')[0];
-    this.hintSound = $('#hintSound')[0];
-    this.winSound = $('#winSound')[0];
-    this.errorSound = $('#errorSound')[0];
-
-    this.newBestSound = $('#newBestSound')[0];
+    this.selectBackgroundAudios = $('#background-audios');
+    this.saveSound = $('#saveSound');
+    this.resetSound = $('#resetSound');
 
     this.game = new Game();
     this.countdownTimer = new Countdown(3);
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
+    this.sound = new Sound();
+    this.backgroundMusic = new BackgroundMusic();
+    this.soundEffect = new SoundEffect();
 
-    //this.showStartGamePage();
-    //this.showCountDownPage();
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
+    this.registerAudios();
+
+    $(window).on('load', () => {
+      this.backgroundMusic.playDefault();
+      $('#Default').prop('checked', true);
+    });
   }
 
   subscribeEventListeners() {
-    this.game.onTick = (elapsedTime) => {
-      this.elapsedTime.text(`${elapsedTime} sec`);
-    };
-
+    // managing sound
     this.settingsControl.on('click', () => {
+      this.soundEffect.playClick();
       this.modal.show('ease-out duration-300');
     });
 
     this.closeModal.on('click', () => {
+      this.soundEffect.playClick();
       this.modal.hide('ease-in duration-200');
     });
 
+    this.saveSound.on('click', () => {
+      this.soundEffect.playClick();
+      this.modal.hide('ease-in duration-200');
+    });
+
+    this.volumnToggle.on('click', () => {
+      this.soundEffect.playClick();
+
+      if (!this.volumnToggle.hasClass('active')) {
+        this.volumnToggle.addClass('active');
+        this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
+        this.backgroundMusic.playDefault();
+      } else {
+        this.volumnToggle.removeClass('active');
+        this.volumnIcon.removeClass('fa-volume-low').addClass('fa-volume-xmark');
+        this.backgroundMusic.stopAll();
+      }
+    });
+
+    // selecting background music:
+    this.selectBackgroundAudios.on('change', 'input[name="sound"]', () => {
+      this.soundEffect.playClick();
+
+      const selectedAudioKey = $('input[name="sound"]:checked').val();
+
+      this.backgroundMusic.stopAll();
+      this.backgroundMusic.play(selectedAudioKey);
+    });
+
+    this.resetSound.on('click', () => {
+      this.soundEffect.playClick();
+      this.backgroundMusic.playDefault;
+    });
+
+    // on-screen keyboard listeners
     this.keyboard.onClear = () => {
       this.hintDiv.fadeOut('fast');
       this.playerInput.val('');
@@ -105,21 +144,25 @@ export class Session {
       this.hintDiv.fadeOut('fast');
     };
 
+    this.game.onTick = (elapsedTime) => {
+      this.elapsedTime.text(`${elapsedTime} sec`);
+    };
+
     this.startBtn.on('click', () => {
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
-        this.errorSound.play();
+        this.soundEffect.playError();
         this.playerNameInput.effect('shake');
         return;
       }
       if (!this.selectedMode) {
-        this.errorSound.play();
+        this.soundEffect.playError();
         this.modeDiv.effect('shake');
         return;
       }
 
-      this.enterGameSound.play();
+      this.soundEffect.playEnterGame();
       this.game.setMode(this.selectedMode);
       this.countdownTimer.start();
     });
@@ -135,12 +178,12 @@ export class Session {
     });
 
     this.startNewBtn.on('click', () => {
-      this.newGameSound.play();
+      this.soundEffect.playEnterGame();
       this.showWelcomePage();
     });
 
     this.startAgainBtn.on('click', () => {
-      this.newGameSound.play();
+      this.soundEffect.playEnterGame();
       this.tryAgain();
     });
 
@@ -153,7 +196,7 @@ export class Session {
       });
 
     this.modes.on('click', () => {
-      this.hintSound.play();
+      this.soundEffect.playClick();
     });
 
     this.countdownTimer.onStart = () => {
@@ -235,7 +278,7 @@ export class Session {
   }
 
   markWrongInput() {
-    this.hintSound.play();
+    this.soundEffect.playClick();
     this.hintDiv.fadeIn();
     this.playerInputDiv.effect('shake');
   }
@@ -258,7 +301,7 @@ export class Session {
     }
 
     if (this.game.isEqualTo(inputValue)) {
-      this.winSound.play();
+      this.soundEffect.playWin();
       this.youWonDiv.show();
       this.playerInput.attr('disabled', '');
       this.hintDiv.hide();
@@ -286,6 +329,40 @@ export class Session {
       this.elapsedTime.text(formattedTime);
       this.youWonScore.text(`Time: ${formattedTime}`);
     }
+  }
+
+  registerAudios() {
+    this.backgroundMusic.audios.forEach((audio) => {
+      this.selectBackgroundAudios.append(`
+        <div class="inline-flex items-center">
+         <label class="relative flex cursor-pointer items-center rounded-full p-2" for="${audio.key}">
+           <input
+             name="sound"
+             type="radio"
+             class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 checked:border-default-bg-default-orange peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border text-gray-900 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-8 before:w-8 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:before:bg-default-orange hover:before:opacity-10"
+             id="${audio.key}"
+             value="${audio.key}"
+           />
+ 
+           <span
+             class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-default-orange opacity-0 transition-opacity peer-checked:opacity-100"
+           >
+             <svg
+               xmlns="http://www.w3.org/2000/svg"
+               class="h-3.5 w-3.5"
+               viewBox="0 0 16 16"
+               fill="currentColor"
+             >
+               <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+             </svg>
+           </span>
+         </label>
+         <label class="mt-px cursor-pointer select-none text-sm text-gray-500" for="${audio.key}">
+           ${audio.name}
+         </label>
+       </div>
+      `);
+    });
   }
 }
 
