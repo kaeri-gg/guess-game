@@ -2,9 +2,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Game } from './game';
 import { Countdown } from '../services/countdown';
 import { Keyboard } from './onscreen-keyboard';
-import { Sound } from './sound';
 import { SoundEffect } from './audio-sound-effect';
 import { BackgroundMusic } from './audio-background-music';
+import { SimpleStorage } from '../services/storage';
 
 export class Session {
   constructor() {
@@ -50,42 +50,68 @@ export class Session {
     this.volumnIcon = $('.volume-toggle-icon');
     this.modal = $('.modal');
     this.closeModal = $('.modal-container>.close');
-
     this.selectBackgroundAudios = $('#background-audios');
     this.saveSound = $('#saveSound');
     this.resetSound = $('#resetSound');
+    this.effectSound = $('#effectSound');
+    this.bgSound = $('#bgSound');
 
     this.game = new Game();
     this.countdownTimer = new Countdown(3);
-    this.keyboard = new Keyboard('#onScreenKeyboardDiv');
-    this.sound = new Sound();
     this.backgroundMusic = new BackgroundMusic();
     this.soundEffect = new SoundEffect();
+    this.store = new SimpleStorage();
+    this.keyboard = new Keyboard('#onScreenKeyboardDiv');
 
     this.showWelcomePage();
     this.subscribeEventListeners();
     this.resetEverything();
     this.registerAudios();
+    this.restoreLocalSettings();
+  }
 
-    $(window).on('load', () => {
-      this.backgroundMusic.playDefault();
-      $('#Default').prop('checked', true);
-    });
+  restoreLocalSettings() {
+    const { audio } = this.store.getAll();
+    // ui settings update
+    this.effectSound.val(audio.volume.effect);
+    this.bgSound.val(audio.volume.background);
+
+    // TODO: Select the radio button
+    // player settngs update
+    this.backgroundMusic.setVolume(audio.volume.background);
+    this.soundEffect.setVolume(audio.volume.effect);
   }
 
   subscribeEventListeners() {
-    // managing sound
+    this.effectSound.on('change', () => {
+      this.store.updateEffectVolume(this.effectSound.val());
+      this.soundEffect.setVolume(audio.volume.effect);
+    });
+
+    this.bgSound.on('change', () => {
+      this.store.updateBackgroundVolume(this.bgSound.val());
+      this.backgroundMusic.setVolume(audio.volume.background);
+    });
+
     this.settingsControl.on('click', () => {
       this.soundEffect.playClick();
       this.modal.show('ease-out duration-300');
+      $('#Default').prop('checked', true);
     });
 
     this.closeModal.on('click', () => {
       this.soundEffect.playClick();
+      this.backgroundMusic.stopAll();
+      this.store.getBackgroundMusic();
+      this.backgroundMusic.play(this.store.getBackgroundMusic());
+
       this.modal.hide('ease-in duration-200');
     });
 
     this.saveSound.on('click', () => {
+      const selectedAudioKey = $('input[name="sound"]:checked').val();
+
+      this.store.updateBackgroundMusic(selectedAudioKey);
       this.soundEffect.playClick();
       this.modal.hide('ease-in duration-200');
     });
@@ -93,14 +119,20 @@ export class Session {
     this.volumnToggle.on('click', () => {
       this.soundEffect.playClick();
 
-      if (!this.volumnToggle.hasClass('active')) {
-        this.volumnToggle.addClass('active');
-        this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
-        this.backgroundMusic.playDefault();
-      } else {
-        this.volumnToggle.removeClass('active');
+      if (this.store.getAudioIsEnabled()) {
+        //update the audio to false
+        this.store.updateAudioEnabled(false);
         this.volumnIcon.removeClass('fa-volume-low').addClass('fa-volume-xmark');
         this.backgroundMusic.stopAll();
+        return;
+      }
+
+      if (!this.store.getAudioIsEnabled()) {
+        //update the audio to true
+        this.store.updateAudioEnabled(true);
+        this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
+        this.backgroundMusic.play(this.store.getBackgroundMusic());
+        return;
       }
     });
 
@@ -116,7 +148,11 @@ export class Session {
 
     this.resetSound.on('click', () => {
       this.soundEffect.playClick();
-      this.backgroundMusic.playDefault;
+      this.backgroundMusic.stopAll();
+      this.store.reset();
+      this.restoreLocalSettings();
+      this.backgroundMusic.playDefault();
+      this.store.updateBackgroundMusic('Default');
     });
 
     // on-screen keyboard listeners
@@ -148,7 +184,10 @@ export class Session {
       this.elapsedTime.text(`${elapsedTime} sec`);
     };
 
+    // player engangements
     this.startBtn.on('click', () => {
+      this.backgroundMusic.stopAll();
+      this.backgroundMusic.play(this.store.getBackgroundMusic());
       this.selectedMode = $('input[name="mode"]:checked').val();
 
       if (!this.playerNameInput.val()) {
@@ -321,14 +360,29 @@ export class Session {
       });
 
       this.game.stopTimer();
-
-      const timeMs = this.game.getPlayerTime();
-      const timeSc = timeMs / 1000;
-      const formattedTime = timeSc.toFixed(2);
-      this.currentScoreTime.text(formattedTime);
-      this.elapsedTime.text(formattedTime);
-      this.youWonScore.text(`Time: ${formattedTime}`);
+      this.displayScore();
     }
+  }
+
+  displayScore() {
+    const timeMs = this.game.getPlayerTime();
+    const timeSc = timeMs / 1000;
+    const currentSessionScore = timeSc.toFixed(2);
+
+    // update elements with current score
+    this.currentScoreTime.text(currentSessionScore);
+    this.elapsedTime.text(currentSessionScore);
+    this.youWonScore.text(`Time: ${currentSessionScore}`);
+
+    this.store.updateHighScoreByMode(this.game.getSelectedMode(), parseFloat(currentSessionScore));
+
+    // TODO: check the high scores among object stored in local storage
+    // if (currentSessionScore)
+
+    // TODO: Display the highest scores based on mode
+    // this.bestScoreName.text();
+    // this.bestScoreTime.text();
+    console.log('HighScores:', this.store.getHighScores());
   }
 
   registerAudios() {

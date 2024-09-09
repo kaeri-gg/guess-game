@@ -23,6 +23,10 @@ export class Game {
     this.numberToGuess = generator.generateNumber(...selectedMode);
   }
 
+  getSelectedMode() {
+    return `${this.currentMode}`;
+  }
+
   getFormattedMode() {
     const [min, max] = this.modes[this.currentMode]; //destructure
 
