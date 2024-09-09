@@ -2,13 +2,13 @@ import { AudioPlayer } from './audio-player';
 
 export class SoundEffect extends AudioPlayer {
   constructor() {
-    super(100, [
-      { key: 'EnterGame', src: 'music/effects/enter-game.mp3' },
-      { key: 'NewGame', src: 'music/effects/new-game.mp3' },
-      { key: 'Click', src: 'music/effects/click.mp3' },
-      { key: 'Win', src: 'music/effects/win.mp3' },
-      { key: 'NewBest', src: 'music/effects/new-best.mp3' },
-      { key: 'Error', src: 'music/effects/error.mp3' },
+    super([
+      { key: 'EnterGame', player: new Audio('music/effects/enter-game.mp3') },
+      { key: 'NewGame', player: new Audio('music/effects/new-game.mp3') },
+      { key: 'Click', player: new Audio('music/effects/click.mp3') },
+      { key: 'Win', player: new Audio('music/effects/win.mp3') },
+      { key: 'NewBest', player: new Audio('music/effects/new-best.mp3') },
+      { key: 'Error', player: new Audio('music/effects/error.mp3') },
     ]);
   }
 
