@@ -68,35 +68,45 @@ export class Session {
     this.resetEverything();
     this.registerAudios();
     this.restoreLocalSettings();
+
+    this.playerNameInput.val(this.store.getPlayerName());
   }
 
   restoreLocalSettings() {
+    this.store.resetAudio();
+
     const { audio } = this.store.getAll();
-    // ui settings update
     this.effectSound.val(audio.volume.effect);
     this.bgSound.val(audio.volume.background);
 
-    // TODO: Select the radio button
-    // player settngs update
+    $(`#${this.store.getBackgroundMusic()}`).prop('checked', true);
     this.backgroundMusic.setVolume(audio.volume.background);
     this.soundEffect.setVolume(audio.volume.effect);
+
+    this.backgroundMusic.play(this.store.getBackgroundMusic());
   }
 
   subscribeEventListeners() {
+    $(document).one('click', () => {
+      if (this.store.getAudioIsEnabled()) {
+        this.backgroundMusic.play(this.store.getBackgroundMusic());
+      }
+    });
+
     this.effectSound.on('change', () => {
-      this.store.updateEffectVolume(this.effectSound.val());
-      this.soundEffect.setVolume(audio.volume.effect);
+      this.store.updateEffectVolume(+this.effectSound.val());
+      this.soundEffect.setVolume(+this.effectSound.val());
     });
 
     this.bgSound.on('change', () => {
-      this.store.updateBackgroundVolume(this.bgSound.val());
-      this.backgroundMusic.setVolume(audio.volume.background);
+      this.store.updateBackgroundVolume(+this.bgSound.val());
+      this.backgroundMusic.setVolume(+this.bgSound.val());
     });
 
     this.settingsControl.on('click', () => {
       this.soundEffect.playClick();
       this.modal.show('ease-out duration-300');
-      $('#Default').prop('checked', true);
+      $(`#${this.store.getBackgroundMusic()}`).prop('checked', true);
     });
 
     this.closeModal.on('click', () => {
@@ -149,10 +159,7 @@ export class Session {
     this.resetSound.on('click', () => {
       this.soundEffect.playClick();
       this.backgroundMusic.stopAll();
-      this.store.reset();
       this.restoreLocalSettings();
-      this.backgroundMusic.playDefault();
-      this.store.updateBackgroundMusic('Default');
     });
 
     // on-screen keyboard listeners
@@ -186,11 +193,12 @@ export class Session {
 
     // player engangements
     this.startBtn.on('click', () => {
-      this.backgroundMusic.stopAll();
-      this.backgroundMusic.play(this.store.getBackgroundMusic());
+      this.soundEffect.playEnterGame();
+
+      const playerName = this.playerNameInput.val();
       this.selectedMode = $('input[name="mode"]:checked').val();
 
-      if (!this.playerNameInput.val()) {
+      if (!playerName) {
         this.soundEffect.playError();
         this.playerNameInput.effect('shake');
         return;
@@ -201,7 +209,7 @@ export class Session {
         return;
       }
 
-      this.soundEffect.playEnterGame();
+      this.store.updatePlayerName(playerName);
       this.game.setMode(this.selectedMode);
       this.countdownTimer.start();
     });

@@ -2,6 +2,7 @@ export class SimpleStorage {
   constructor() {
     this._storeName = 'GUESS-GAME-DATA';
     this._defaultData = {
+      playerName: '',
       highScore: {
         Easy: 0,
         Normal: 0,
@@ -34,9 +35,32 @@ export class SimpleStorage {
   }
 
   // Public Methods:
-
   getAll() {
     return this._get();
+  }
+
+  //player name
+  getPlayerName() {
+    return this._get().playerName;
+  }
+
+  updatePlayerName(name) {
+    const data = this._get();
+    this._save({
+      ...data, // spreading old data
+      playerName: name, // overriding only 1 property
+    });
+
+    // or
+    // this._save({
+    //   playerName: 'Katie',
+    //   highScore: data.highScore,
+    //   audio: data.audio,
+    // });
+
+    // or
+    // data.playerName = 'Katie';
+    // this._save(data);
   }
 
   //highscores
@@ -93,7 +117,12 @@ export class SimpleStorage {
     this._save(data);
   }
 
-  reset() {
-    this._save(this._defaultData);
+  resetAudio() {
+    const data = this._get();
+    const { audio } = this._defaultData;
+    this._save({
+      ...data,
+      audio: audio,
+    });
   }
 }
