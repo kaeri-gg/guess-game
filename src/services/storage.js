@@ -4,9 +4,18 @@ export class SimpleStorage {
     this._defaultData = {
       playerName: '',
       highScore: {
-        Easy: 0,
-        Normal: 0,
-        Hard: 0,
+        Easy: {
+          playerName: '',
+          bestScore: 9999999,
+        },
+        Normal: {
+          playerName: '',
+          bestScore: 9999999,
+        },
+        Hard: {
+          playerName: '',
+          bestScore: 9999999,
+        },
       },
       audio: {
         enabled: true,
@@ -16,6 +25,7 @@ export class SimpleStorage {
         },
         activeBackgroundMusic: 'Default',
       },
+      scores: [],
     };
   }
 
@@ -63,14 +73,67 @@ export class SimpleStorage {
     // this._save(data);
   }
 
+  //scores
+  getAllScoresMode() {
+    const scores = this._get().scores;
+    const allModes = scores.map((score) => score.mode); // Map to get the 'mode' property from each object
+    return allModes; // Return the array of modes
+  }
+
+  getAllScores() {
+    const scores = this._get().scores;
+    return scores;
+  }
+
+  getAllEasyScores() {
+    const easyScores = this._get()
+      .scores.filter((score) => score.mode === 'Easy')
+      .map((score) => score.score);
+
+    return easyScores;
+  }
+
+  addScores(playerName, mode, score) {
+    const data = this._get();
+
+    data.scores.push({
+      playerName,
+      mode,
+      score,
+    });
+
+    // Ensure scores is an array
+    //const scores = Array.isArray(data.scores) ? data.scores : [];
+
+    // append new score to the object of scores
+    // const newScore = [
+    //   ...data.scores, // existing scores
+    //   {
+    //     playerName,
+    //     mode,
+    //     score,
+    //   },
+    // ];
+
+    this._save(data);
+  }
+
   //highscores
   getHighScores() {
     return this._get().highScore;
   }
 
-  updateHighScoreByMode(mode, score) {
+  // updateHighScoreByMode(mode, score, name) {
+  //   const data = this._get();
+  //   data.highScore[mode].bestScore = score;
+  //   data.highScore[mode].playerName = name;
+
+  //   this._save(data);
+  // }
+
+  updateAllHighScores(highScore) {
     const data = this._get();
-    data.highScore[mode] = score;
+    data.highScore = highScore;
 
     this._save(data);
   }
