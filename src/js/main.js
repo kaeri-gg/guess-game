@@ -68,6 +68,7 @@ export class Session {
     this.resetEverything();
     this.registerAudios();
     this.restoreLocalSettings();
+    this.displayInitialHighScores();
 
     this.playerNameInput.val(this.store.getPlayerName());
   }
@@ -227,6 +228,7 @@ export class Session {
     this.startNewBtn.on('click', () => {
       this.soundEffect.playEnterGame();
       this.showWelcomePage();
+      this.displayInitialHighScores();
     });
 
     this.startAgainBtn.on('click', () => {
@@ -286,6 +288,19 @@ export class Session {
 
     this.startGameMainDiv.show();
     this.playerSubmitDiv.show();
+  }
+
+  displayInitialHighScores() {
+    const highScores = this.store.getHighScores();
+    const bestSc = (score) => (score / 1000).toFixed(2);
+
+    $('#best-name-Easy').text(highScores.Easy.playerName);
+    $('#best-name-Normal').text(highScores.Normal.playerName);
+    $('#best-name-Hard').text(highScores.Hard.playerName);
+
+    $('#best-score-Easy').text(bestSc(highScores.Easy.bestScore));
+    $('#best-score-Normal').text(bestSc(highScores.Normal.bestScore));
+    $('#best-score-Hard').text(bestSc(highScores.Hard.bestScore));
   }
 
   resetEverything() {
@@ -348,6 +363,8 @@ export class Session {
     }
 
     if (this.game.isEqualTo(inputValue)) {
+      this.game.stopTimer();
+
       this.soundEffect.playWin();
       this.youWonDiv.show();
       this.playerInput.attr('disabled', '');
@@ -367,7 +384,10 @@ export class Session {
         origin: { y: 0.6 },
       });
 
-      this.game.stopTimer();
+      const timeMs = this.game.getPlayerTime();
+      this.store.addScores(this.playerNameInput.val(), this.game.getSelectedMode(), timeMs);
+
+      this.evaluateBestScore();
       this.displayScore();
     }
   }
@@ -382,15 +402,52 @@ export class Session {
     this.elapsedTime.text(currentSessionScore);
     this.youWonScore.text(`Time: ${currentSessionScore}`);
 
-    this.store.updateHighScoreByMode(this.game.getSelectedMode(), parseFloat(currentSessionScore));
+    // update the best name and best score based on selected mode
+    const highScores = this.store.getHighScores();
+    const currentMode = this.game.getSelectedMode();
+    const currentHighScorer = highScores[currentMode];
+    const bestSc = currentHighScorer.bestScore / 1000;
+    this.bestScoreName.text(currentHighScorer.playerName);
+    this.bestScoreTime.text(bestSc.toFixed(2));
+  }
 
-    // TODO: check the high scores among object stored in local storage
-    // if (currentSessionScore)
+  evaluateBestScore() {
+    const currentMode = this.game.getSelectedMode();
+    const allScores = this.store.getAllScores();
 
-    // TODO: Display the highest scores based on mode
-    // this.bestScoreName.text();
-    // this.bestScoreTime.text();
-    console.log('HighScores:', this.store.getHighScores());
+    // const easyScores = allScores.filter((score) => score.mode === 'Easy');
+    // const normalScores = allScores.filter((score) => score.mode === 'Normal');
+    // const hardScores = allScores.filter((score) => score.mode === 'Hard');
+
+    // const bestScoreForEasy = Math.min(...easyScores);
+    // const bestScoreForNormal = Math.min(...normalScores);
+    // const bestScoreForHard = Math.min(...hardScores);
+
+    const highScore = {
+      Easy: {
+        playerName: 'No name',
+        bestScore: 999999,
+      },
+      Normal: {
+        playerName: 'No name',
+        bestScore: 999999,
+      },
+      Hard: {
+        playerName: 'No name',
+        bestScore: 999999,
+      },
+    };
+
+    for (let scoreObj of allScores) {
+      if (scoreObj.score < highScore[currentMode].bestScore) {
+        highScore[currentMode].bestScore = scoreObj.score;
+        highScore[currentMode].playerName = scoreObj.playerName;
+      }
+    }
+
+    // TODO: fix this! it resets the highscores!!!
+    debugger;
+    this.store.updateAllHighScores(highScore);
   }
 
   registerAudios() {
