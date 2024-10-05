@@ -327,16 +327,13 @@ export class Session {
   }
 
   showGameDetails() {
-    const mode = this.selectedMode;
-
     this.playerNameText.text(this.playerNameInput.val());
     this.modeText.html(this.game.getFormattedMode());
 
     this.currentScoreName.text(this.playerNameInput.val());
     this.currentScoreTime.text('0.00');
 
-    this.bestScoreName.text('Unknown');
-    this.bestScoreTime.text('0.00');
+    this.displayHighScore();
   }
 
   markWrongInput() {
@@ -402,18 +399,21 @@ export class Session {
     this.elapsedTime.text(currentSessionScore);
     this.youWonScore.text(`Time: ${currentSessionScore}`);
 
-    // update the best name and best score based on selected mode
+    this.displayHighScore();
+  }
+
+  displayHighScore() {
     const highScores = this.store.getHighScores();
     const currentMode = this.game.getSelectedMode();
     const currentHighScorer = highScores[currentMode];
-    const bestSc = currentHighScorer.bestScore / 1000;
     this.bestScoreName.text(currentHighScorer.playerName);
-    this.bestScoreTime.text(bestSc.toFixed(2));
+    this.bestScoreTime.text((currentHighScorer.bestScore / 1000).toFixed(2));
   }
 
   evaluateBestScore() {
     const currentMode = this.game.getSelectedMode();
     const allScores = this.store.getAllScores();
+    console.log('allScores: ', allScores);
 
     // const easyScores = allScores.filter((score) => score.mode === 'Easy');
     // const normalScores = allScores.filter((score) => score.mode === 'Normal');
@@ -438,16 +438,13 @@ export class Session {
       },
     };
 
-    for (let scoreObj of allScores) {
+    for (let scoreObj of allScores[currentMode]) {
       if (scoreObj.score < highScore[currentMode].bestScore) {
         highScore[currentMode].bestScore = scoreObj.score;
         highScore[currentMode].playerName = scoreObj.playerName;
       }
     }
-
-    // TODO: fix this! it resets the highscores!!!
-    debugger;
-    this.store.updateAllHighScores(highScore);
+    this.store.updateAllHighScores(highScore[currentMode], currentMode);
   }
 
   registerAudios() {
