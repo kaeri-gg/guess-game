@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <base href="/guess-game/" />
+    <meta property="og:title" content="Guess Game" />
+    <meta property="og:description" content="Guess Game" />
+    <meta property="og:image" content="assets/react.svg" />
+    <meta name="twitter:card" content="asseets/react.svg" />
+    <meta name="twitter:title" content="Guess Game" />
+    <meta name="twitter:description" content="Guess Game" />
+    <title>Guess Game</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/guess-game/favicon.svg" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script type="module" crossorigin src="/guess-game/index-1zmcRReJ.js"></script>
+    <link rel="stylesheet" crossorigin href="/guess-game/index-CZlzUPx_.css">
+  </head>
+
+  <body class="min-h-screen w-screen overflow-hidden overflow-y-auto bg-default-gray100" ontouchstart="">
+    <div class="flex flex-col items-center justify-between">
+      <!-------------------- welcome page --------------------->
+      <div
+        id="welcomeMainDiv"
+        class="flex min-h-screen min-w-64 max-w-lg flex-col items-center justify-center space-y-4 text-base xs:text-sm"
+      >
+        <!-------------------- controls --------------------->
+        <div class="controls absolute xs:right-1 xs:top-1 sm:right-3 sm:top-3">
+          <div class="m-3 flex flex-row items-center justify-end space-x-4">
+            <button
+              type="button"
+              class="settings-control max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+            >
+              <i class="fa-solid fa-gear min-text-xs"></i>
+            </button>
+            <button
+              type="button"
+              class="volume-toggle active max-h-14 min-h-10 min-w-10 max-w-14 justify-center rounded-lg border border-gray-200 bg-default-gray200 text-xl text-gray-500"
+            >
+              <i class="volume-toggle-icon fa-solid min-text-xs fa-volume-low"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-------------------- settings --------------------->
+        <div
+          style="display: none"
+          class="modal relative z-10"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            class="modal-overlay fixed inset-0 bg-slate-900/25 bg-opacity-75 backdrop-blur transition-opacity"
+            aria-hidden="true"
+          ></div>
+          <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full flex-col items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <div
+                class="modal-container relative w-full transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+              >
+                <!-- Close button -->
+                <button
+                  type="button"
+                  class="close xs: absolute top-5 text-base text-gray-400 hover:text-gray-500 focus:outline-none xs:right-5 sm:right-7 sm:top-7"
+                  aria-label="Close"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+
+                <!-- Game Settings Controls -->
+
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                  <div class="sm:flex sm:items-start">
+                    <div class="mt-3 w-full sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3
+                        class="mt-4 font-display font-semibold leading-6 text-gray-900 xs:text-base md:text-xl"
+                        id="modal-title"
+                      >
+                        Game Settings
+                      </h3>
+                      <div class="mt-2">
+                        <p class="text-sm text-gray-500">Adjust the sounds according to your like:</p>
+                      </div>
+                      <div class="m-7 mb-0">
+                        <div class="my-5">
+                          <div class="flex flex-col items-start space-y-2">
+                            <label for="bgSound" class="mb-2 text-sm font-medium text-gray-700"
+                              >Background sound:</label
+                            >
+                            <input
+                              list="datalist"
+                              id="bgSound"
+                              type="range"
+                              min="1"
+                              max="100"
+                              step="1"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-default-gray300"
+                            />
+                            <datalist id="datalist">
+                              <option value="1">|</option>
+                              <option value="10">|</option>
+                              <option value="20">|</option>
+                              <option value="30">|</option>
+                              <option value="40">|</option>
+                              <option value="50">|</option>
+                              <option value="60">|</option>
+                              <option value="70">|</option>
+                              <option value="80">|</option>
+                              <option value="90">|</option>
+                              <option value="100">|</option>
+                            </datalist>
+                          </div>
+                        </div>
+                        <div class="my-5">
+                          <div class="flex flex-col items-start space-y-2">
+                            <label for="effectSound" class="mb-2 text-sm font-medium text-gray-700">
+                              Sound effects:
+                            </label>
+                            <input
+                              id="effectSound"
+                              list="datalist"
+                              type="range"
+                              min="1"
+                              max="100"
+                              step="1"
+                              class="h-2 w-full cursor-pointer rounded-lg bg-gray-200 accent-default-gray400 transition-all duration-300 ease-in-out focus:outline-none focus:ring-1 focus:ring-default-gray300"
+                            />
+                          </div>
+                        </div>
+                        <div class="mt-7">
+                          <div id="background-audios" class="flex flex-col">
+                            <label for="" class="mb-2 text-sm font-medium text-gray-700">Choose background song:</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Save and Restore Button -->
+                <div class="flex flex-row justify-between bg-gray-50 p-4 xs:flex-col sm:flex-row sm:px-6">
+                  <button
+                    type="button"
+                    id="resetSound"
+                    class="mt-3 inline-flex w-full justify-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0"
+                  >
+                    Reset Default
+                  </button>
+                  <button
+                    type="button"
+                    id="saveSound"
+                    class="mt-3 inline-flex w-full justify-center rounded-full bg-default-orange px-3 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-90 sm:ml-3 sm:mt-0"
+                  >
+                    Sounds cool!
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-64">
+          <img src="/guess-game/guess-game-logo.svg" class="w-full min-w-64" />
+        </div>
+        <div class="flex flex-col items-center justify-center space-y-6 px-7 xs:space-y-4">
+          <!-----------game mechanics ---------->
+          <div class="justify-center self-center text-center md:my-6 lg:my-8">
+            <p>
+              🕹️ Oh wow, look who’s ready to play! Just pick a mode, guess the secret number, or just sleep! Because why
+              would you bother guessing, right?😄 Or keep at it and figure out how math works! 😎✨
+            </p>
+          </div>
+
+          <!-----------name input ---------->
+          <div class="flex w-full flex-row items-center justify-center space-x-2 pb-8 xs:text-sm md:text-base">
+            <input
+              type="text"
+              id="playerNameInput"
+              autocomplete="none"
+              autofocus="on"
+              class="border-r-1 border-l-1 h-12 w-full rounded-lg border-b-2 border-gray-300 bg-white px-4 py-2 text-gray-800 shadow-md transition-shadow duration-300 ease-in-out focus:shadow-xl focus:outline-none active:shadow-md"
+              placeholder="Your name..."
+            />
+          </div>
+
+          <div id="modeDiv" class="flex w-full flex-row items-center justify-center space-x-2 pb-8">
+            <!-----------mode: easy ---------->
+            <div class="flex w-full flex-col items-center">
+              <div class="flex flex-col xs:mb-3 md:mb-4">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-col items-center justify-center text-center italic text-default-gray300">
+                  <p id="best-name-Easy">Haerin</p>
+                  <p id="best-score-Easy">- 4s</p>
+                </div>
+              </div>
+
+              <label class="radio-label w-full">
+                <input type="radio" id="easyMode" name="mode" value="Easy" class="peer hidden" />
+                <div
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                >
+                  Easy
+                </div>
+              </label>
+            </div>
+
+            <!-----------mode: normal ---------->
+            <div class="flex w-full flex-col items-center">
+              <div class="flex flex-col xs:mb-3 md:mb-4">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-col items-center justify-center text-center italic text-default-gray300">
+                  <p id="best-name-Normal">Kaeri</p>
+                  <p id="best-score-Normal">- 6s</p>
+                </div>
+              </div>
+
+              <label class="radio-label w-full">
+                <input type="radio" id="normalMode" name="mode" value="Normal" class="peer hidden" />
+                <div
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                >
+                  Normal
+                </div>
+              </label>
+            </div>
+
+            <!-----------mode: hard ---------->
+            <div class="flex w-full flex-col items-center">
+              <div class="flex flex-col xs:mb-3 md:mb-4">
+                <p class="items-center justify-center text-center font-bold text-default-gray300">Best:</p>
+                <div class="flex flex-col items-center justify-center text-center italic text-default-gray300">
+                  <p id="best-name-Hard">Harry</p>
+                  <p id="best-score-Hard">- 7s</p>
+                </div>
+              </div>
+
+              <label class="radio-label w-full">
+                <input type="radio" id="hardMode" name="mode" value="Hard" class="peer hidden" />
+                <div
+                  class="flex h-14 w-full items-center justify-center rounded-full bg-gray-200 font-display font-bold shadow-lg transition-transform ease-in-out hover:shadow-xl active:translate-y-1 active:shadow-sm peer-checked:bg-default-cyan peer-checked:text-white"
+                >
+                  Hard
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="w-full">
+            <button
+              id="startBtn"
+              class="h-16 w-full animate-bounce rounded-full bg-default-orange font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md xs:h-14 xs:text-sm md:text-base"
+            >
+              START
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-------------------- countdown --------------------->
+      <div
+        id="countdownMainDiv"
+        style="display: none"
+        class="flex min-h-screen w-full flex-col items-center justify-center bg-default-orange"
+      >
+        <p id="counterText" class="animate-pump font-display text-[15rem] font-bold text-default-peach">3</p>
+      </div>
+
+      <!-------------------- game starts page --------------------->
+      <div id="startGameMainDiv" style="display: none" class="flex min-h-screen w-full flex-col justify-between">
+        <!-------------------- details --------------------->
+
+        <div class="flex w-full flex-row items-center justify-between p-4 xs:p-4 xs:text-sm md:p-8">
+          <div class="flex w-1/2 flex-col bg-default-gray200 p-3 md:w-60 md:flex-row md:p-4">
+            <span class="md:p-2">Mode: </span>
+            <span id="modeText" class="font-bold md:p-2">Normal (1-100) </span>
+          </div>
+          <div
+            id="timerDiv"
+            class="flex w-1/2 flex-col bg-default-orange p-3 text-right text-white md:w-60 md:flex-row md:p-4"
+          >
+            <span class="md:p-2">Timer:</span>
+            <span id="elapsedTime" class="font-bold md:p-2"></span>
+          </div>
+        </div>
+        <!-------------------- main --------------------->
+        <div class="flex h-full flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <p>Player:</p>
+            <p id="playerNameText" class="font-display text-4xl font-bold uppercase text-black xs:text-3xl">Yeji</p>
+          </div>
+          <div id="playerInputDiv" class="mb-5 flex flex-col items-center p-3 xs:mb-1 md:p-7">
+            <input
+              disabled
+              readonly
+              id="playerInput"
+              type="number"
+              class="w-52 appearance-none border-b border-gray-300 bg-transparent text-center font-display text-6xl font-bold text-black outline-none xs:w-32 xs:text-5xl md:w-56 md:text-8xl"
+              placeholder="00"
+            />
+            <div id="hintDiv" class="flex flex-row space-x-1 p-3 font-display xs:text-sm md:text-base">
+              <div class="h-6 w-5">
+                <i id="hintIcon" class="fas"></i>
+              </div>
+              <span id="hintText"></span>
+            </div>
+
+            <div id="youWonDiv" class="flex flex-col space-x-1 p-3 text-center font-display text-green-500">
+              <span id="youWonText" class="text-base">You're right!</span>
+              <span class="score text-4xl font-bold xs:text-2xl">SCORE: 4.01</span>
+            </div>
+          </div>
+          <!-------------------- submit button --------------------->
+          <div id="playerSubmitDiv" class="w-100 flex flex-row" style="display: none">
+            <button
+              id="playerSubmitBtn"
+              data-clicked="false"
+              class="h-12 w-56 animate-bounce rounded-full bg-default-cyan font-display text-xl font-bold text-white shadow-lg transition-shadow duration-1000 ease-in-out hover:shadow-xl active:shadow-md xs:h-10 xs:w-48 xs:text-base md:h-16 md:w-80"
+            >
+              SUBMIT
+            </button>
+          </div>
+
+          <!-------------------- new and start again button --------------------->
+          <div
+            id="newGameButtonsDiv"
+            class="w-100 flex flex-row font-display text-xl font-bold text-white duration-1000 xs:space-x-2 xs:text-sm md:flex-row md:space-x-4 md:space-y-0 md:text-base"
+          >
+            <button
+              id="startNewBtn"
+              class="rounded-full bg-default-cyan shadow-lg transition-shadow ease-in-out hover:shadow-xl active:shadow-md xs:h-10 xs:w-36 md:h-16 md:w-60"
+            >
+              NEW
+            </button>
+            <button
+              id="startAgainBtn"
+              class="rounded-full bg-default-orange shadow-lg transition-shadow ease-in-out hover:shadow-xl active:shadow-md xs:h-10 xs:w-36 md:h-16 md:w-60"
+            >
+              PLAY AGAIN
+            </button>
+          </div>
+        </div>
+
+        <!-------------------- on-screen keyboard --------------------->
+        <div
+          id="onScreenKeyboardDiv"
+          class="flex w-full flex-col gap-0.5 border-b font-display text-xl active:shadow-inner"
+        >
+          <!------ 1-3 ---->
+          <div class="flex w-full flex-row justify-between gap-0.5">
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="1"
+              >
+                1
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="2"
+              >
+                2
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="3"
+              >
+                3
+              </button>
+            </div>
+          </div>
+          <!------ 4-6 ---->
+          <div class="flex w-full flex-row justify-between gap-0.5">
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="4"
+              >
+                4
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="5"
+              >
+                5
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="6"
+              >
+                6
+              </button>
+            </div>
+          </div>
+          <!------ 7-9 ---->
+          <div class="flex w-full flex-row justify-between gap-0.5">
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="7"
+              >
+                7
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="8"
+              >
+                8
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="9"
+              >
+                9
+              </button>
+            </div>
+          </div>
+          <!------ 0 ---->
+          <div class="flex w-full flex-row justify-around gap-0.5">
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 text-base active:bg-default-cyan active:shadow-inner xs:h-14 xs:text-sm sm:h-16"
+                data-value="Clear"
+              >
+                Clear
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 active:bg-default-cyan active:shadow-inner xs:h-14 sm:h-16"
+                data-value="0"
+              >
+                0
+              </button>
+            </div>
+            <div class="w-2/6">
+              <button
+                class="w-full border-gray-300 bg-default-gray200 text-base active:bg-default-cyan active:shadow-inner xs:h-14 xs:text-sm sm:h-16"
+                data-value="Backspace"
+              >
+                Backspace
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-------------------- best score --------------------->
+        <div id="score" class="flex w-full flex-row justify-between font-bebas text-3xl xs:text-2xl md:text-4xl">
+          <div class="current flex flex-col items-start p-4 xs:py-2 md:p-8">
+            <p class="font-display text-base">Current:</p>
+            <p class="name text-black">Unknown</p>
+            <p class="time text-default-cyan">0.00</p>
+          </div>
+          <div class="best flex flex-col items-end p-4 xs:py-2 md:p-8">
+            <p class="font-display text-base">Best:</p>
+            <p class="name text-black">Unknown</p>
+            <p class="time text-default-orange">0.00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-------------------- footer --------------------->
+    <div class="flex bg-transparent" style="display: none">
+      <span class="flex h-12 items-center">Footer details here.</span>
+    </div>
+  </body>
+</html>
