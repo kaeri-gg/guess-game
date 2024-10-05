@@ -25,7 +25,11 @@ export class SimpleStorage {
         },
         activeBackgroundMusic: 'Default',
       },
-      scores: [],
+      scores: {
+        Easy: [],
+        Normal: [],
+        Hard: [],
+      },
     };
   }
 
@@ -96,24 +100,10 @@ export class SimpleStorage {
   addScores(playerName, mode, score) {
     const data = this._get();
 
-    data.scores.push({
+    data.scores[mode].push({
       playerName,
-      mode,
       score,
     });
-
-    // Ensure scores is an array
-    //const scores = Array.isArray(data.scores) ? data.scores : [];
-
-    // append new score to the object of scores
-    // const newScore = [
-    //   ...data.scores, // existing scores
-    //   {
-    //     playerName,
-    //     mode,
-    //     score,
-    //   },
-    // ];
 
     this._save(data);
   }
@@ -123,17 +113,9 @@ export class SimpleStorage {
     return this._get().highScore;
   }
 
-  // updateHighScoreByMode(mode, score, name) {
-  //   const data = this._get();
-  //   data.highScore[mode].bestScore = score;
-  //   data.highScore[mode].playerName = name;
-
-  //   this._save(data);
-  // }
-
-  updateAllHighScores(highScore) {
+  updateAllHighScores(highScore, mode) {
     const data = this._get();
-    data.highScore = highScore;
+    data.highScore[mode] = highScore;
 
     this._save(data);
   }
