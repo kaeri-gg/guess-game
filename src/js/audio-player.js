@@ -34,6 +34,7 @@ export class AudioPlayer {
   play(key) {
     const { player } = this.getAudioBy(key);
     player.play();
+    player.loop = true;
   }
 
   stop(key) {
