@@ -34,13 +34,17 @@ export class AudioPlayer {
   play(key) {
     const { player } = this.getAudioBy(key);
     player.play();
-    player.loop = true;
   }
 
   stop(key) {
     const { player } = this.getAudioBy(key);
     player.pause();
     player.current = 0;
+  }
+
+  playOnLoop(key) {
+    const { player } = this.getAudioBy(key);
+    player.loop = true;
   }
 
   getAudioBy(key) {
