@@ -11,10 +11,10 @@
 ## Features
 
 - **Mobile-Friendly:** Playable on both desktop and mobile devices.
-- **Background Music:** Select from several background music tracks, or mute it.
+- **Background Music:** Select from several background music tracks, or mute them.
 - **Sound Effects:** Configurable sound effects for game interactions, with options to increase, decrease, or mute volume.
 - **Best Score Tracking:** The game tracks the highest score for each difficulty mode.
-- **Highscore Highlighting:** Highlights when a new highscore is reached.
+- **Highscore Highlighting:** Highlights when a new high score is reached.
 - **User Name Entry:** Save your score with your name (no authentication required).
 - **Replayable:** Play the same mode again or reset to allow another user to try.
 
@@ -24,7 +24,7 @@
 2. Guess the hidden number within the range for that mode.
 3. Use the hints to adjust your next guess (e.g., "too high" or "too low").
 4. If you guess the number correctly, your score is recorded locally.
-5. If you reach a new highscore, it will be highlighted.
+5. If you reach a new high score, it will be highlighted.
 6. Play again with the same name or restart to change the player.
 
 ## Configuration
@@ -41,7 +41,8 @@ To run the game locally:
 
 ## Future Improvements
 
-- Add special effect for new highscore.
+- Add special effects for new high scores.
+- Add keyboard support.
 - Adding more difficulty modes.
 - Enhancing score tracking with local leaderboards.
 
