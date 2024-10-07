@@ -4,39 +4,48 @@ import tailwindcss from 'tailwindcss';
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
-  const getBase = () => {
-    if (env.mode === 'github') return '/guess-game';
+    const getBase = () => {
+        if (env.mode === 'github') return '/guess-game';
 
-    return './';
-  };
+        return './';
+    };
 
-  return {
-    plugins: [],
-    css: {
-      postcss: {
-        plugins: [tailwindcss()],
-      },
-    },
-    publicDir: 'public',
-    envPrefix: 'KATH_',
-    outDir: 'dist',
-    envDir: cwd(),
-    server: {
-      open: true,
-      port: 4096,
-      host: '0.0.0.0',
-    },
-    base: getBase(),
-    build: {
-      chunkSizeWarningLimit: 700,
-      sourcemap: true,
-      assetsDir: '.',
-      emptyOutDir: true,
-      rollupOptions: {
-        input: {
-          index: 'index.html',
+    return {
+        plugins: [],
+        css: {
+            postcss: {
+                plugins: [tailwindcss()],
+            },
         },
-      },
-    },
-  };
+        publicDir: 'public',
+        envPrefix: 'KATH_',
+        outDir: 'dist',
+        envDir: cwd(),
+        server: {
+            open: true,
+            port: 4096,
+            host: '0.0.0.0',
+        },
+        base: getBase(),
+        build: {
+            chunkSizeWarningLimit: 700,
+            sourcemap: true,
+            assetsDir: '.',
+            emptyOutDir: true,
+            rollupOptions: {
+                input: {
+                    index: 'index.html',
+                },
+            },
+        },
+        test: {
+            globals: true,
+            environment: 'jsdom',
+            coverage: {
+                all: true,
+                reporter: ['cobertura', 'text', 'html'],
+                exclude: ['*.cjs', '*.config.*', 'dist/**', 'src/**.d.ts', 'tests'],
+            },
+        },
+    };
 });
