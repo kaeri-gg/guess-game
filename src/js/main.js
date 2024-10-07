@@ -77,20 +77,23 @@ export class Session {
     this.store.resetAudio();
 
     const { audio } = this.store.getAll();
+    const currentTrack = this.store.getBackgroundMusic();
+
     this.effectSound.val(audio.volume.effect);
     this.bgSound.val(audio.volume.background);
 
-    $(`#${this.store.getBackgroundMusic()}`).prop('checked', true);
+    $(`#${currentTrack}`).prop('checked', true);
     this.backgroundMusic.setVolume(audio.volume.background);
     this.soundEffect.setVolume(audio.volume.effect);
 
-    this.backgroundMusic.play(this.store.getBackgroundMusic());
+    this.backgroundMusic.play(currentTrack, { loop: true });
   }
 
   subscribeEventListeners() {
     $(document).one('click', () => {
       if (this.store.getAudioIsEnabled()) {
-        this.backgroundMusic.play(this.store.getBackgroundMusic());
+        const currentTrack = this.store.getBackgroundMusic();
+        this.backgroundMusic.play(currentTrack, { loop: true });
       }
     });
 
@@ -111,10 +114,11 @@ export class Session {
     });
 
     this.closeModal.on('click', () => {
+      const currentTrack = this.store.getBackgroundMusic();
+
       this.soundEffect.playClick();
       this.backgroundMusic.stopAll();
-      this.store.getBackgroundMusic();
-      this.backgroundMusic.play(this.store.getBackgroundMusic());
+      this.backgroundMusic.play(currentTrack, { loop: true });
 
       this.modal.hide('ease-in duration-200');
     });
@@ -140,9 +144,11 @@ export class Session {
 
       if (!this.store.getAudioIsEnabled()) {
         //update the audio to true
+        const currentTrack = this.store.getBackgroundMusic();
+
         this.store.updateAudioEnabled(true);
         this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
-        this.backgroundMusic.play(this.store.getBackgroundMusic());
+        this.backgroundMusic.play(currentTrack, { loop: true });
         return;
       }
     });
@@ -154,7 +160,7 @@ export class Session {
       const selectedAudioKey = $('input[name="sound"]:checked').val();
 
       this.backgroundMusic.stopAll();
-      this.backgroundMusic.play(selectedAudioKey);
+      this.backgroundMusic.play(selectedAudioKey, { loop: true });
     });
 
     this.resetSound.on('click', () => {

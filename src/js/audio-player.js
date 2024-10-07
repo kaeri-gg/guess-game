@@ -31,8 +31,9 @@ export class AudioPlayer {
     });
   }
 
-  play(key) {
+  play(key, options = {}) {
     const { player } = this.getAudioBy(key);
+    if (options.loop) player.loop = options.loop;
     player.play();
   }
 
