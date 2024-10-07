@@ -300,9 +300,9 @@ export class Session {
     const highScores = this.store.getHighScores();
     const bestSc = (score) => (score / 1000).toFixed(2);
 
-    $('#best-name-Easy').text(highScores.Easy.playerName);
-    $('#best-name-Normal').text(highScores.Normal.playerName);
-    $('#best-name-Hard').text(highScores.Hard.playerName);
+    $('#best-name-Easy').text(highScores.Easy.playerName ? highScores.Easy.playerName : 'Unknown');
+    $('#best-name-Normal').text(highScores.Normal.playerName ? highScores.Normal.playerName : 'Unknown');
+    $('#best-name-Hard').text(highScores.Hard.playerName ? highScores.Hard.playerName : 'Unknown');
 
     $('#best-score-Easy').text(bestSc(highScores.Easy.bestScore));
     $('#best-score-Normal').text(bestSc(highScores.Normal.bestScore));
