@@ -40,6 +40,7 @@ export class Session {
     this.youWonDiv = $('#youWonDiv');
     this.youWonScore = $('#youWonDiv>.score');
     this.youWonText = $('#youWonText');
+    this.newBestText = $('#newBestText');
 
     this.easyModeOption = $('#easyMode');
     this.normalModeOption = $('#normalMode');
@@ -294,6 +295,7 @@ export class Session {
 
     this.startGameMainDiv.show();
     this.playerSubmitDiv.show();
+    this.newBestText.hide();
   }
 
   displayInitialHighScores() {
@@ -339,7 +341,7 @@ export class Session {
     this.currentScoreName.text(this.playerNameInput.val());
     this.currentScoreTime.text('0.00');
 
-    this.displayHighScore();
+    this.displayHighScoreDetails();
   }
 
   markWrongInput() {
@@ -381,21 +383,14 @@ export class Session {
         this.newGameButtonsDiv.addClass('animate-bounce');
       }, 2300);
 
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-
       const timeMs = this.game.getPlayerTime();
       this.store.addScores(this.playerNameInput.val(), this.game.getSelectedMode(), timeMs);
 
       this.evaluateBestScore();
-      this.displayScore();
     }
   }
 
-  displayScore() {
+  displayScoreDetails() {
     const timeMs = this.game.getPlayerTime();
     const timeSc = timeMs / 1000;
     const currentSessionScore = timeSc.toFixed(2);
@@ -404,11 +399,9 @@ export class Session {
     this.currentScoreTime.text(currentSessionScore);
     this.elapsedTime.text(currentSessionScore);
     this.youWonScore.text(`Time: ${currentSessionScore}`);
-
-    this.displayHighScore();
   }
 
-  displayHighScore() {
+  displayHighScoreDetails() {
     const highScores = this.store.getHighScores();
     const currentMode = this.game.getSelectedMode();
     const currentHighScorer = highScores[currentMode];
@@ -419,15 +412,6 @@ export class Session {
   evaluateBestScore() {
     const currentMode = this.game.getSelectedMode();
     const allScores = this.store.getAllScores();
-    console.log('allScores: ', allScores);
-
-    // const easyScores = allScores.filter((score) => score.mode === 'Easy');
-    // const normalScores = allScores.filter((score) => score.mode === 'Normal');
-    // const hardScores = allScores.filter((score) => score.mode === 'Hard');
-
-    // const bestScoreForEasy = Math.min(...easyScores);
-    // const bestScoreForNormal = Math.min(...normalScores);
-    // const bestScoreForHard = Math.min(...hardScores);
 
     const highScore = {
       Easy: {
@@ -450,39 +434,58 @@ export class Session {
         highScore[currentMode].playerName = scoreObj.playerName;
       }
     }
+
     this.store.updateAllHighScores(highScore[currentMode], currentMode);
-  }
-  // TODO: Display new confettie and best score stuff if there's new highscore
-  displayBestConfetti() {
-    const defaults = {
-      spread: 360,
-      ticks: 50,
-      gravity: 0,
-      decay: 0.94,
-      startVelocity: 30,
-      shapes: ['star'],
-      colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'],
-    };
 
-    function shoot() {
-      confetti({
-        ...defaults,
-        particleCount: 40,
-        scalar: 1.2,
-        shapes: ['star'],
-      });
+    const newScore = allScores[currentMode][allScores[currentMode].length - 1];
 
-      confetti({
-        ...defaults,
-        particleCount: 10,
-        scalar: 0.75,
-        shapes: ['circle'],
-      });
+    if (newScore.score == highScore[currentMode].bestScore) {
+      this.displayScoreDetails();
+      this.displayHighScoreDetails();
+      this.displayBestConfetti();
+      this.newBestText.show();
+      this.youWonText.text('Congratulations!');
+    } else {
+      this.displayScoreDetails();
+      this.displayConfetti();
+      this.youWonText.text("You're right!");
     }
+  }
 
-    setTimeout(shoot, 0);
-    setTimeout(shoot, 100);
-    setTimeout(shoot, 200);
+  displayBestConfetti() {
+    const end = Date.now() + 15 * 350;
+
+    const colors = ['#29cdff', '#78ff44', '#a864fd'];
+
+    (function frame() {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  }
+
+  displayConfetti() {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
   }
 
   registerAudios() {

@@ -5,15 +5,15 @@ export class SimpleStorage {
       playerName: '',
       highScore: {
         Easy: {
-          playerName: '',
+          playerName: 'Unknown',
           bestScore: 9999999,
         },
         Normal: {
-          playerName: '',
+          playerName: 'Unknown',
           bestScore: 9999999,
         },
         Hard: {
-          playerName: '',
+          playerName: 'Unknown',
           bestScore: 9999999,
         },
       },
