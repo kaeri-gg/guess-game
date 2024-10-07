@@ -448,6 +448,7 @@ export class Session {
     } else {
       this.displayScoreDetails();
       this.displayConfetti();
+      this.youWonText.text("You're right!");
     }
   }
 
