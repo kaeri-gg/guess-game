@@ -86,17 +86,14 @@ export class Session {
     this.backgroundMusic.setVolume(audio.volume.background);
     this.soundEffect.setVolume(audio.volume.effect);
 
-    this.backgroundMusic.play(currentTrack);
-    this.backgroundMusic.playOnLoop(currentTrack);
+    this.backgroundMusic.play(currentTrack, { loop: true });
   }
 
   subscribeEventListeners() {
     $(document).one('click', () => {
       if (this.store.getAudioIsEnabled()) {
         const currentTrack = this.store.getBackgroundMusic();
-
-        this.backgroundMusic.play(currentTrack);
-        this.backgroundMusic.playOnLoop(currentTrack);
+        this.backgroundMusic.play(currentTrack, { loop: true });
       }
     });
 
@@ -121,8 +118,7 @@ export class Session {
 
       this.soundEffect.playClick();
       this.backgroundMusic.stopAll();
-      this.backgroundMusic.play(currentTrack);
-      this.backgroundMusic.playOnLoop(currentTrack);
+      this.backgroundMusic.play(currentTrack, { loop: true });
 
       this.modal.hide('ease-in duration-200');
     });
@@ -152,8 +148,7 @@ export class Session {
 
         this.store.updateAudioEnabled(true);
         this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
-        this.backgroundMusic.play(currentTrack);
-        this.backgroundMusic.playOnLoop(currentTrack);
+        this.backgroundMusic.play(currentTrack, { loop: true });
         return;
       }
     });
@@ -165,8 +160,7 @@ export class Session {
       const selectedAudioKey = $('input[name="sound"]:checked').val();
 
       this.backgroundMusic.stopAll();
-      this.backgroundMusic.play(selectedAudioKey);
-      this.backgroundMusic.playOnLoop(selectedAudioKey);
+      this.backgroundMusic.play(selectedAudioKey, { loop: true });
     });
 
     this.resetSound.on('click', () => {
