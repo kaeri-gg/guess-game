@@ -121,7 +121,6 @@ export class Session {
 
       this.soundEffect.playClick();
       this.backgroundMusic.stopAll();
-      //this.store.getBackgroundMusic();
       this.backgroundMusic.play(currentTrack);
       this.backgroundMusic.playOnLoop(currentTrack);
 
