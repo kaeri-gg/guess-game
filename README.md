@@ -2,7 +2,11 @@
 
 **Guess Game** is a simple, mobile-friendly web game where you guess a hidden number within a given range. The game offers three difficulty modes: Easy, Normal, and Hard, each with varying number ranges.
 
-![image](https://github.com/user-attachments/assets/0d5fcf15-547d-44a2-aea5-842b4bd4c2df)
+![image](https://github.com/user-attachments/assets/633a920a-9f8b-45c0-bd4c-1bece04177d2)
+
+![image](https://github.com/user-attachments/assets/17f4c8c6-0e55-49a5-a114-508813220301)
+
+![image](https://github.com/user-attachments/assets/43eaaf57-ad29-4d7a-9260-8a323c18526e)
 
 ## Game Modes
 
