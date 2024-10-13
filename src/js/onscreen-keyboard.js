@@ -16,21 +16,40 @@ export class Keyboard {
     this.onEnter = () => {};
     this.onNumber = () => {};
 
+    const map = {
+      Enter: () => this.onEnter(),
+      NumpadEnter: () => this.onEnter(),
+
+      Backspace: () => this.onBackspace(),
+      Digit0: () => this.onNumber(0),
+      Digit1: () => this.onNumber(1),
+      Digit2: () => this.onNumber(2),
+      Digit3: () => this.onNumber(3),
+      Digit4: () => this.onNumber(4),
+      Digit5: () => this.onNumber(5),
+      Digit6: () => this.onNumber(6),
+      Digit7: () => this.onNumber(7),
+      Digit8: () => this.onNumber(8),
+      Digit9: () => this.onNumber(9),
+
+      Numpad0: () => this.onNumber(0),
+      Numpad1: () => this.onNumber(1),
+      Numpad2: () => this.onNumber(2),
+      Numpad3: () => this.onNumber(3),
+      Numpad4: () => this.onNumber(4),
+      Numpad5: () => this.onNumber(5),
+      Numpad6: () => this.onNumber(6),
+      Numpad7: () => this.onNumber(7),
+      Numpad8: () => this.onNumber(8),
+      Numpad9: () => this.onNumber(9),
+    };
+
     $(document).on('keydown', (event) => {
       if (!$(selector).is(':visible')) return;
 
-      if (event.code === 'Enter') return this.onEnter();
-      if (event.code === 'Backspace') return this.onClear();
+      const action = map[event.code];
 
-      const key = event.which || event.keyCode;
-
-      // Check if it's a number key (0-9)
-      if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
-        // 48-57 are number keys (0-9) on the keyboard
-        // 96-105 are number keys (0-9) on the numpad
-        const numberValue = String.fromCharCode(key);
-        this.onNumber(parseInt(numberValue));
-      }
+      if (action) action();
     });
   }
 }
