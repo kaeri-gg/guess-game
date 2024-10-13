@@ -183,6 +183,10 @@ export class Session {
       this.hintDiv.fadeOut('fast');
     };
 
+    this.keyboard.onEnter = () => {
+      this.guess();
+    };
+
     this.keyboard.onNumber = (value) => {
       // clear input when user clicks on keyboard again
       if (this.playerSubmitBtn.attr('data-clicked') === 'true') {
@@ -226,11 +230,11 @@ export class Session {
       this.guess();
     });
 
-    this.startGameMainDiv.on('keydown', (event) => {
-      if (event.code === 'Enter') {
-        this.guess();
-      }
-    });
+    // this.startGameMainDiv.on('keydown', (event) => {
+    //   if (event.code === 'Enter') {
+    //     this.guess();
+    //   }
+    // });
 
     this.startNewBtn.on('click', () => {
       this.soundEffect.playEnterGame();

@@ -13,6 +13,24 @@ export class Keyboard {
 
     this.onClear = () => {};
     this.onBackspace = () => {};
+    this.onEnter = () => {};
     this.onNumber = () => {};
+
+    $(document).on('keydown', (event) => {
+      if (!$(selector).is(':visible')) return;
+
+      if (event.code === 'Enter') return this.onEnter();
+      if (event.code === 'Backspace') return this.onClear();
+
+      const key = event.which || event.keyCode;
+
+      // Check if it's a number key (0-9)
+      if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
+        // 48-57 are number keys (0-9) on the keyboard
+        // 96-105 are number keys (0-9) on the numpad
+        const numberValue = String.fromCharCode(key);
+        this.onNumber(parseInt(numberValue));
+      }
+    });
   }
 }
