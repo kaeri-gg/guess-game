@@ -10,7 +10,7 @@
     "build:github": "vite build --mode=github"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.31",
+    "@types/jquery": "^3.5.32",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "sass-embedded": "^1.79.4",
