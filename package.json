@@ -13,7 +13,7 @@
     "@types/jquery": "^3.5.32",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "sass-embedded": "^1.85.1",
+    "sass-embedded": "^1.86.0",
     "tailwindcss": "^4.0.13",
     "vite": "^6.2.1"
   },
