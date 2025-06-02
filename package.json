@@ -22,7 +22,7 @@
     "autoprefixer": "^10.4.21",
     "jquery": "^3.7.1",
     "jquery-ui": "^1.14.1",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.4",
     "postcss-cli": "^11.0.1"
   }
 }
