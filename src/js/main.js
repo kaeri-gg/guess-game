@@ -42,10 +42,6 @@ export class Session {
     this.youWonText = $('#youWonText');
     this.newBestText = $('#newBestText');
 
-    this.easyModeOption = $('#easyMode');
-    this.normalModeOption = $('#normalMode');
-    this.hardModeOption = $('#hardMode');
-
     this.settingsControl = $('.settings-control');
     this.volumnToggle = $('.volume-toggle');
     this.volumnIcon = $('.volume-toggle-icon');
@@ -63,13 +59,6 @@ export class Session {
     this.soundEffect = new SoundEffect();
     this.store = new SimpleStorage();
     this.keyboard = new Keyboard('#onScreenKeyboardDiv');
-
-    this.showWelcomePage();
-    this.subscribeEventListeners();
-    this.resetEverything();
-    this.registerAudios();
-    this.restoreLocalSettings();
-    this.displayInitialHighScores();
 
     this.playerNameInput.val(this.store.getPlayerName());
   }
@@ -150,7 +139,6 @@ export class Session {
         this.store.updateAudioEnabled(true);
         this.volumnIcon.removeClass('fa-volume-xmark').addClass('fa-volume-low');
         this.backgroundMusic.play(currentTrack, { loop: true });
-        return;
       }
     });
 
@@ -443,7 +431,7 @@ export class Session {
 
     const newScore = allScores[currentMode][allScores[currentMode].length - 1];
 
-    if (newScore.score == highScore[currentMode].bestScore) {
+    if (newScore.score === highScore[currentMode].bestScore) {
       this.displayScoreDetails();
       this.displayHighScoreDetails();
       this.displayBestConfetti();
@@ -493,7 +481,11 @@ export class Session {
   }
 
   registerAudios() {
-    this.backgroundMusic.audios.forEach((audio) => {
+    this.backgroundMusic.audios.forEach(
+      /**
+       * @param {HTMLAudioElement & {key: number}} audio
+       */
+      (audio) => {
       this.selectBackgroundAudios.append(`
         <div class="inline-flex items-center">
          <label class="relative flex cursor-pointer items-center rounded-full p-2" for="${audio.key}">
@@ -529,3 +521,9 @@ export class Session {
 
 // Instantiate and start the session
 const gameApp = new Session();
+gameApp.showWelcomePage();
+gameApp.subscribeEventListeners();
+gameApp.resetEverything();
+gameApp.registerAudios();
+gameApp.restoreLocalSettings();
+gameApp.displayInitialHighScores();

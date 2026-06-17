@@ -1,0 +1,96 @@
+name: Deploy
+
+# Builds the Vite app once, then ships it two ways:
+#   - GitHub Pages  -> on every push to main (and manual runs)
+#   - itch.io       -> only on version tags (v*), via butler
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+# Needed by actions/deploy-pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Don't cancel an in-progress Pages deploy; queue instead.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        # KATH_* values are baked into index.html at build time (envPrefix: KATH_).
+        # Keep KATH_BASE_URL relative ("./") so the same artifact works on both
+        # GitHub Pages (served from /guessing-game/) and itch.io (served from
+        # html-classic.itch.zone) without 404ing assets. Edit TITLE/DESCRIPTION.
+        env:
+          KATH_BASE_URL: './'
+          KATH_TITLE: 'Guessing Game'
+          KATH_DESCRIPTION: 'A number guessing game.'
+        run: npm run build
+
+      # Artifact for the Pages deploy job (special github-pages format).
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      # Plain artifact reused by the itch.io job.
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist
+
+  deploy-pages:
+    # Pages on pushes to main and manual runs — not on tags.
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  itch-publish:
+    # itch.io only on version tags (e.g. v1.0.0).
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: dist
+
+      - name: Install butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+
+      - name: Push to itch.io
+        env:
+          BUTLER_API_KEY: ${{ secrets.ITCH_IO_API_KEY }}
+        run: ./butler push dist "${{ secrets.ITCH_IO_USERNAME }}/guess-the-number-game:html5"
