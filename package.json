@@ -10,7 +10,7 @@
     "build:github": "vite build --mode=github"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.32",
+    "@types/jquery": "^4.0.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "sass-embedded": "^1.89.2",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
     "autoprefixer": "^10.4.21",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "jquery-ui": "^1.14.1",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1"
