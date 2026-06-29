@@ -21,7 +21,7 @@
     "picomatch@<2.3.2": "2.3.2"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@fortawesome/fontawesome-free": "^7.3.0",
     "autoprefixer": "^10.4.21",
     "jquery": "^3.7.1",
     "jquery-ui": "^1.14.1",
